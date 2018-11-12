@@ -1,3 +1,26 @@
 {
-  "key" : "value"
+  "user": {
+    "kkkkkkk1234": "user1"
+
+  },
+  "categories": {
+    "kkkkkkk1234": {
+      "balance score": {
+        "score": -6
+      },
+      "¿Ω¡÷": {
+        "score": 1
+      },
+      "ºÓ«Œ": {
+        "score": 1
+      }
+    }
+  },
+  "score": {
+    "kkkkkkk1234": {
+      "day1": 0,
+      "day2": 1
+    }
+
+  }
 }
