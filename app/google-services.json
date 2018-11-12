@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "630426456162",
+    "firebase_url": "https://worklifebalance-ff4e7.firebaseio.com",
+    "project_id": "worklifebalance-ff4e7",
+    "storage_bucket": "worklifebalance-ff4e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630426456162:android:541600fb29c950f0",
+        "android_client_info": {
+          "package_name": "com.example.dahye.wlb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630426456162-2l9o7mdv08f3n6rq1ugjppkcrg1pas3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dahye.wlb",
+            "certificate_hash": "629596515ae4ccdbd22d5d0224b4a06a94462166"
+          }
+        },
+        {
+          "client_id": "630426456162-ivkqufk75ts8seee4s8ee5eu3805pjno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYGr5LeosG7BELRGz1z39DrxDL9A_zkm0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630426456162-ivkqufk75ts8seee4s8ee5eu3805pjno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
