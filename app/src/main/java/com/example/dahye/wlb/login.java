@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,16 +30,31 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
     private GoogleApiClient mGoogleApiClient;
     SignInButton Google_Login;
     TextView testview;
-    Button Logout;
+    Button Logout, Back;
 
     private static final int RC_SIGN_IN = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        testview = findViewById(R.id.textView);
-        Logout = findViewById(R.id.button);
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+
+        testview = (TextView) findViewById(R.id.textView);
+        Logout = (Button) findViewById(R.id.button);
+        Back = (Button) findViewById(R.id.back);
+        Back.setOnClickListener(this);
+        Google_Login = findViewById(R.id.Google_Login);
+
+        if(id != null){
+            Logout.setVisibility(View.VISIBLE);
+            Google_Login.setVisibility(View.GONE);
+            testview.setText(id);
+        }else{
+            Logout.setVisibility(View.GONE);
+            Google_Login.setVisibility(View.VISIBLE);
+        }
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -49,7 +65,6 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                 .build();
         mAuth = FirebaseAuth.getInstance();
 
-        Google_Login = findViewById(R.id.Google_Login);
         Google_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +81,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                 testview.setText((CharSequence) user);
                 Toast.makeText(login.this,"Logout", Toast.LENGTH_LONG).show();
                 Google_Login.setVisibility(View.VISIBLE);
-                Logout.setVisibility(View.INVISIBLE);
+                Logout.setVisibility(View.GONE);
 //                testview.setText("");
             }
         });
@@ -96,7 +111,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                             FirebaseUser user = mAuth.getCurrentUser();
                             String providerId = user.getEmail();
                             testview.setText(providerId);
-                            Google_Login.setVisibility(View.INVISIBLE);
+                            Google_Login.setVisibility(View.GONE);
                             Logout.setVisibility(View.VISIBLE);
                             Toast.makeText(login.this, "구글로그인 인증", Toast.LENGTH_SHORT).show();
                         }else{ // login fail
@@ -107,7 +122,12 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
     }
     @Override
     public void onClick(View view) {
-
+        if(view.getId()==R.id.back){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }else{
+            finish();
+        }
     }
 
     @Override
