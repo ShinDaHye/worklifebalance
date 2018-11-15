@@ -36,11 +36,13 @@
 
             <ImageButton
                 android:id="@+id/imgbtn_minus"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_width="20dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:paddingLeft="5dp"
+                android:paddingTop="18dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="18dp"
                 android:src="@drawable/imgbtn_minus" />
 
             <TextView
@@ -48,19 +50,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="TextView"
-                android:textAlignment="textEnd" />
+                android:text="TextView" />
 
             <ImageButton
                 android:id="@+id/imgbtn_plus"
-                android:layout_marginLeft="5dp"
+                android:layout_width="20dp"
+                android:layout_height="48dp"
                 android:layout_marginRight="30dp"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:paddingLeft="5dp"
+                android:paddingTop="18dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="18dp"
                 android:src="@drawable/imgbtn_add" />
 
         </LinearLayout>
     </LinearLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

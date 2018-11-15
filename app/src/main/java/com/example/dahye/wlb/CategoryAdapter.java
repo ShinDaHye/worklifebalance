@@ -63,13 +63,15 @@ public class CategoryAdapter extends ArrayAdapter {
 
         imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-                Toast.makeText(context, "minus", Toast.LENGTH_LONG).show();
+                int origin_num = Integer.parseInt(score.getText().toString());
+                score.setText(Integer.toString(origin_num - 1));
             }
         });
 
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-                Toast.makeText(context, "plus", Toast.LENGTH_LONG).show();
+                int origin_num = Integer.parseInt(score.getText().toString());
+                score.setText(Integer.toString(origin_num + 1));
             }
         });
 
