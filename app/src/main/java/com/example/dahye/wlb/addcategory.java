@@ -42,6 +42,7 @@ public class addcategory extends Activity  implements View.OnClickListener
             id =user.getEmail();
             id = id.substring(0,id.indexOf("@"));
         }else{
+            id = "sdhdonna";
             Toast.makeText(addcategory.this,"로그인해주세요",Toast.LENGTH_LONG).show();
         }
         mReference = mDatabase.getReference();

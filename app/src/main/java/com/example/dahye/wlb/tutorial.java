@@ -34,6 +34,7 @@ public class tutorial extends Activity {
             id =user.getEmail();
             id = id.substring(0,id.indexOf("@"));
         }else{
+            id = "sdhdonna";
             Toast.makeText(tutorial.this,"로그인해주세요",Toast.LENGTH_LONG).show();
         }
         listView = (ListView) findViewById(R.id.listviewmsg);
