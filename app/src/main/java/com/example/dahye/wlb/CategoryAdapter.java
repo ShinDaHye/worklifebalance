@@ -1,15 +1,12 @@
 package com.example.dahye.wlb;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +47,7 @@ public class CategoryAdapter extends ArrayAdapter {
 
         /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
         TextView category = (TextView) convertView.findViewById(R.id.category) ;
-        TextView score = (TextView) convertView.findViewById(R.id.score) ;
+        final TextView score = (TextView) convertView.findViewById(R.id.score) ;
 
         CategoryItem item = items.get(position);
 
