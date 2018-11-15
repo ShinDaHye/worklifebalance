@@ -3,7 +3,10 @@ package com.example.dahye.wlb;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,20 +25,26 @@ public class tutorial extends Activity {
     private ListView listView;
     private CategoryAdapter adapter;
     List<CategoryItem> Array = new ArrayList<CategoryItem>();
-
+    String id;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial);
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            id =user.getEmail();
+            id = id.substring(0,id.indexOf("@"));
+        }else{
+            Toast.makeText(tutorial.this,"로그인해주세요",Toast.LENGTH_LONG).show();
+        }
         listView = (ListView) findViewById(R.id.listviewmsg);
 
-        initDatabase();
+        initDatabase(id);
     }
 
-    private void initDatabase() {
+    private void initDatabase(String id) {
         mDatabase = FirebaseDatabase.getInstance();
 
-        mReference = mDatabase.getReference("categories/kkkkkkk1234"); // 변경값을 확인할 child 이름
+        mReference = mDatabase.getReference("categories").child(id); // 변경값을 확인할 child 이름
 
         mReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {

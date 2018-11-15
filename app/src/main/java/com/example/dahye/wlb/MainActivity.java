@@ -43,22 +43,29 @@ import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button login;
+    Button login, intent_add,intent_tuto;
     TextView providerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         login = (Button) findViewById(R.id.login);
+        intent_add = (Button) findViewById(R.id.intent_add);
+        intent_tuto = (Button) findViewById(R.id.intent_tuto);
         providerId = (TextView) findViewById(R.id.providerId);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             providerId.setText(user.getEmail());
         }else{
             providerId.setText("");
         }
-
+        if(providerId.getText()==""){
+            intent_add.setVisibility(View.INVISIBLE);
+        }
         login.setOnClickListener(this);
+        intent_add.setOnClickListener(this);
+        intent_tuto.setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(providerId.getText() != ""){
                 intent.putExtra("id",providerId.getText().toString());
             }
+            startActivity(intent);
+        }else if(view.getId()==R.id.intent_add){
+            Intent intent = new Intent(this,addcategory.class);
+            startActivity(intent);
+        }else if(view.getId()==R.id.intent_tuto){
+            Intent intent = new Intent(this,tutorial.class);
             startActivity(intent);
         }else{
             finish();
