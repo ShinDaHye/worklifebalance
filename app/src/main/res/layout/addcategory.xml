@@ -60,6 +60,12 @@
                     android:hint="볼링"
                     android:inputType="text" />
 
+                <NumberPicker
+                    android:id="@+id/numberpicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                </NumberPicker>
                 <EditText
                     android:id="@+id/score"
                     android:layout_width="match_parent"

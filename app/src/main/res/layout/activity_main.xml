@@ -54,6 +54,12 @@
             android:layout_height="wrap_content"
             android:text="튜토리얼이동" />
 
+        <Button
+            android:id="@+id/intent_graph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="그래프보기" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

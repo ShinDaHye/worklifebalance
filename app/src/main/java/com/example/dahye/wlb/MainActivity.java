@@ -43,7 +43,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button login, intent_add,intent_tuto;
+    Button login, intent_add,intent_tuto, intent_graph;
     TextView providerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = (Button) findViewById(R.id.login);
         intent_add = (Button) findViewById(R.id.intent_add);
         intent_tuto = (Button) findViewById(R.id.intent_tuto);
+        intent_graph = (Button)findViewById(R.id.intent_graph);
         providerId = (TextView) findViewById(R.id.providerId);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login.setOnClickListener(this);
         intent_add.setOnClickListener(this);
         intent_tuto.setOnClickListener(this);
+        intent_graph.setOnClickListener(this);
     }
 
     @Override
@@ -81,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }else if(view.getId()==R.id.intent_tuto){
             Intent intent = new Intent(this,tutorial.class);
+            startActivity(intent);
+        }else if(view.getId()==R.id.intent_graph){
+            Intent intent = new Intent(this,graph.class);
             startActivity(intent);
         }else{
             finish();

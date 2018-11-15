@@ -1,12 +1,16 @@
 package com.example.dahye.wlb;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,10 +25,11 @@ public class addcategory extends Activity  implements View.OnClickListener
 {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
-    private ChildEventListener mChild;
+    NumberPicker numberPicker;
     EditText Category, Score;
     Button addBtn;
-    String id, name, sc ;
+    String id, name;
+    int sc ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,8 +40,29 @@ public class addcategory extends Activity  implements View.OnClickListener
         Category = (EditText) findViewById(R.id.category);
         Score = (EditText) findViewById(R.id.score);
         addBtn= (Button) findViewById(R.id.addbtn);
+        numberPicker = (NumberPicker)findViewById(R.id.numberpicker);
         name = Category.getText().toString();
-        sc = Score.getText().toString();
+
+        final int minValue = -10;
+        final int maxValue = 10;
+        numberPicker.setValue(0);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(maxValue-minValue);
+        numberPicker.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int i) {
+                return Integer.toString(i+minValue);
+            }
+        });
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        setDividerColor(numberPicker, android.R.color.white);
+        numberPicker.setWrapSelectorWheel(false);
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
+            }
+        });
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             id =user.getEmail();
@@ -49,12 +75,34 @@ public class addcategory extends Activity  implements View.OnClickListener
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mReference.child("categories").child(id).child(Category.getText().toString()).child("score").setValue(Score.getText().toString());
+                sc = numberPicker.getValue() + minValue;
+                mReference.child("categories").child(id).child(Category.getText().toString()).child("score").setValue(sc);
             }
         });
 
     }
-        @Override
+
+    private void setDividerColor(NumberPicker numberPicker, int color) {
+        java.lang.reflect.Field[] pickerFields = NumberPicker.class.getDeclaredFields();
+        for(java.lang.reflect.Field pf : pickerFields){
+            if(pf.getName().equals("mSelectionDivider")){
+                pf.setAccessible(true);
+                try{
+                    ColorDrawable colorDrawable = new ColorDrawable(color);
+                    pf.set(numberPicker, colorDrawable);
+                }catch(IllegalArgumentException e){
+                    e.printStackTrace();;
+                }catch(Resources.NotFoundException e){
+                    e.printStackTrace();
+                }catch(IllegalAccessException e){
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
     public void onClick(View view) {
 
     }
