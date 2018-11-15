@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 public class CategoryAdapter extends ArrayAdapter {
     private List<CategoryItem> items;
     private int rsrc;
+    private Context context;
 
     @Override
     public void add(Object object) {
@@ -31,11 +35,12 @@ public class CategoryAdapter extends ArrayAdapter {
         super(context, rsrcId, txtId, data);
         this.items = data;
         this.rsrc = rsrcId;
+        this.context=context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Context context = parent.getContext();
+        final Context context = parent.getContext();
 
         /* 'listview_custom' Layout을 inflate하여 convertView 참조 획득 */
         if (convertView == null) {
@@ -51,6 +56,22 @@ public class CategoryAdapter extends ArrayAdapter {
 
         category.setText(item.getCategory());
         score.setText(item.getScore());
+
+        /* 버튼에 대한 이벤트 리스너 */
+        ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.imgbtn_minus);
+        ImageButton imgbtn_plus = (ImageButton)convertView.findViewById(R.id.imgbtn_plus);
+
+        imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
+            public void onClick(View view){
+                Toast.makeText(context, "minus", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
+            public void onClick(View view){
+                Toast.makeText(context, "plus", Toast.LENGTH_LONG).show();
+            }
+        });
 
         return convertView;
     }

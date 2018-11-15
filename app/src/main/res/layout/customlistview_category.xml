@@ -10,16 +10,17 @@
         android:layout_width="369dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="369dp"
-            android:layout_height="49dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
@@ -33,14 +34,32 @@
                 android:text="TextView"
                 android:textAlignment="textStart" />
 
+            <ImageButton
+                android:id="@+id/imgbtn_minus"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/imgbtn_minus" />
+
             <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="TextView"
                 android:textAlignment="textEnd" />
+
+            <ImageButton
+                android:id="@+id/imgbtn_plus"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/imgbtn_add" />
+
         </LinearLayout>
     </LinearLayout>
 
