@@ -7,11 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends ArrayAdapter {
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
+
+    String id;
+
     private List<CategoryItem> items;
     private int rsrc;
     private Context context;
@@ -37,6 +48,17 @@ public class CategoryAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        mDatabase = FirebaseDatabase.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            id =user.getEmail();
+            id = id.substring(0,id.indexOf("@"));
+        }else{
+            id = "sdhdonna";
+        }
+        mReference = mDatabase.getReference("categories").child(id);
+
         final Context context = parent.getContext();
 
         /* 'listview_custom' Layout을 inflate하여 convertView 참조 획득 */
@@ -46,10 +68,10 @@ public class CategoryAdapter extends ArrayAdapter {
         }
 
         /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
-        TextView category = (TextView) convertView.findViewById(R.id.category) ;
+        final TextView category = (TextView) convertView.findViewById(R.id.category) ;
         final TextView score = (TextView) convertView.findViewById(R.id.score) ;
 
-        CategoryItem item = items.get(position);
+        final CategoryItem item = items.get(position);
 
         category.setText(item.getCategory());
         score.setText(item.getScore());
@@ -62,6 +84,7 @@ public class CategoryAdapter extends ArrayAdapter {
             public void onClick(View view){
                 int origin_num = Integer.parseInt(score.getText().toString());
                 score.setText(Integer.toString(origin_num - 1));
+                mReference.child(item.getCategory()).child("score").setValue(Integer.toString(origin_num - 1));
             }
         });
 
@@ -69,6 +92,7 @@ public class CategoryAdapter extends ArrayAdapter {
             public void onClick(View view){
                 int origin_num = Integer.parseInt(score.getText().toString());
                 score.setText(Integer.toString(origin_num + 1));
+                mReference.child(item.getCategory()).child("score").setValue(Integer.toString(origin_num + 1));
             }
         });
 
