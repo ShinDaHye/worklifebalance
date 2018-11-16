@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this,addcategory.class);
             startActivity(intent);
         }else if(view.getId()==R.id.intent_tuto){
-            Intent intent = new Intent(this,tutorial.class);
+            Intent intent = new Intent(this,addcategory.class);
             startActivity(intent);
         }else if(view.getId()==R.id.intent_graph){
             Intent intent = new Intent(this,graph.class);
