@@ -103,6 +103,7 @@ public class addcategory extends Activity{
                     public void onClick(View view) {
                         int sc = numberPicker.getValue() + minValue;
                         mReference.child("categories").child(id).child(test_add.getText().toString()).child("score").setValue(sc);
+                        mReference.child("categories").child(id).child(test_add.getText().toString()).child("score").setValue(sc);
                         mPopupWindow.dismiss();
                     }
                 });

@@ -16,7 +16,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,10 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CategoryAdapter_main adapter;
     List<CategoryItem> Array = new ArrayList<CategoryItem>();
 
-    Button login, intent_add,intent_tuto, intent_graph;
+    Button submit, intent_add,intent_tuto, intent_graph;
     TextView providerId;
     TextView scoreTextView;
-
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,55 +42,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listView = (ListView) findViewById(R.id.main_categories);
 
-        login = (Button) findViewById(R.id.login);
         intent_add = (Button) findViewById(R.id.intent_add);
         intent_tuto = (Button) findViewById(R.id.intent_tuto);
         intent_graph = (Button)findViewById(R.id.intent_graph);
         providerId = (TextView) findViewById(R.id.providerId);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar c1 = Calendar.getInstance();
+        String strToday = sdf.format(c1.getTime());
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             providerId.setText(user.getEmail());
+            id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
         }else{
             providerId.setText("");
         }
         if(providerId.getText()==""){
-            intent_add.setVisibility(View.INVISIBLE);
+            intent_add.setVisibility(View.GONE);
+        }else{
         }
-        login.setOnClickListener(this);
+
         intent_add.setOnClickListener(this);
         intent_tuto.setOnClickListener(this);
         intent_graph.setOnClickListener(this);
 
-        initDatabase(user.getEmail().substring(0,user.getEmail().indexOf("@")));
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view.getId()==R.id.login){
-            Intent intent = new Intent(this,login.class);
-            if(providerId.getText() != ""){
-                intent.putExtra("id",providerId.getText().toString());
-            }
-            startActivity(intent);
-        }else if(view.getId()==R.id.intent_add){
-            Intent intent = new Intent(this,addcategory.class);
-            startActivity(intent);
-        }else if(view.getId()==R.id.intent_tuto){
-            Intent intent = new Intent(this,addcategory.class);
-            startActivity(intent);
-        }else if(view.getId()==R.id.intent_graph){
-            Intent intent = new Intent(this,graph.class);
-            startActivity(intent);
-        }else{
-            finish();
+        if(id != null){
+            initDatabase(id,strToday);
         }
     }
-
-    private void initDatabase(final String id) {
+    private void initDatabase(final String id, final String day) {
+        submit = (Button) findViewById(R.id.submit);
         mDatabase = FirebaseDatabase.getInstance();
 
-        mReference = mDatabase.getReference("split-score").child(id).child("day01"); // 변경값을 확인할 child 이름
+        mReference = mDatabase.getReference("split-score").child(id).child(day); // 변경값을 확인할 child 이름
 
         mReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,7 +93,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 scoreTextView.setText("총점 : " + Integer.toString(totalScore));
-                mDatabase.getReference("total-score").child(id).child("day01").setValue(totalScore);
+
+                final int finalTotalScore = totalScore;
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDatabase.getReference("total-score").child(id).child(day).setValue(finalTotalScore);
+                    }
+                });
             }
             public void onCancelled(DatabaseError databaseError) {
 
@@ -121,6 +114,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==R.id.intent_add){
+            Intent intent = new Intent(this,addcategory.class);
+            startActivity(intent);
+        }else if(view.getId()==R.id.intent_tuto){
+            Intent intent = new Intent(this,addcategory.class);
+            startActivity(intent);
+        }else if(view.getId()==R.id.intent_graph){
+            Intent intent = new Intent(this,graph.class);
+            startActivity(intent);
+        }else{
+            finish();
+        }
     }
 
 }

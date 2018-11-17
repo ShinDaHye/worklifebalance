@@ -2,6 +2,7 @@ package com.example.dahye.wlb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,8 +39,6 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
 
         testview = (TextView) findViewById(R.id.textView);
         Logout = (Button) findViewById(R.id.button);
@@ -47,14 +46,18 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
         Back.setOnClickListener(this);
         Google_Login = findViewById(R.id.Google_Login);
 
-        if(id != null){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null){ // 로그인 되어있으면
             Logout.setVisibility(View.VISIBLE);
             Google_Login.setVisibility(View.GONE);
-            testview.setText(id);
-        }else{
+            testview.setText(user.getEmail().toString());
+            startLoading();
+        }else{ // 안되어 있으면
             Logout.setVisibility(View.GONE);
             Google_Login.setVisibility(View.VISIBLE);
         }
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -114,6 +117,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                             Google_Login.setVisibility(View.GONE);
                             Logout.setVisibility(View.VISIBLE);
                             Toast.makeText(login.this, "구글로그인 인증", Toast.LENGTH_SHORT).show();
+                            startLoading();
                         }else{ // login fail
                             Toast.makeText(getApplicationContext(),"Authentication failed.", Toast.LENGTH_LONG).show();
                         }
@@ -133,5 +137,16 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+    private void startLoading(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getBaseContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        },1000);
     }
 }
