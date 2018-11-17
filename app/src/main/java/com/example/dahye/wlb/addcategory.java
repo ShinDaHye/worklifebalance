@@ -7,8 +7,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -34,10 +36,13 @@ public class addcategory extends Activity{
     private ListView listView;
     private CategoryAdapter adapter;
     List<CategoryItem> Array = new ArrayList<CategoryItem>();
+
     private String id;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addcategory);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             id =user.getEmail();
@@ -49,6 +54,7 @@ public class addcategory extends Activity{
         listView = (ListView) findViewById(R.id.listviewmsg);
 
         initDatabase(id);
+
         //버튼 이벤트 생성(팝업)
         categoryadd = findViewById(R.id.categoryadd);
 
@@ -57,6 +63,29 @@ public class addcategory extends Activity{
             public void onClick(View view) {
                 View popupView = getLayoutInflater().inflate(R.layout.popupaddcategory,null);
                //팝업 크기 설정
+                final EditText test_add = popupView.findViewById(R.id.category);
+                final NumberPicker numberPicker = popupView.findViewById(R.id.numberpicker);
+                Button addBtn = popupView.findViewById(R.id.addbtn);
+                final int minValue = -10;
+                final int maxValue = 10;
+                numberPicker.setMinValue(0);
+                numberPicker.setMaxValue(maxValue-minValue);
+                numberPicker.setValue((maxValue-minValue)/2);
+                numberPicker.setFormatter(new NumberPicker.Formatter() {
+                    @Override
+                    public String format(int i) {
+                        return Integer.toString(i+minValue);
+                    }
+                });
+                numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+//                setDividerColor(numberPicker, android.R.color.white);
+                numberPicker.setWrapSelectorWheel(false);
+                numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
+                    }
+                });
                 mPopupWindow = new PopupWindow(popupView,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 //팝업 애니메이션 설정 -1: 설정
 //                mPopupWindow.setAnimationStyle(-1);
@@ -69,10 +98,12 @@ public class addcategory extends Activity{
                 mPopupWindow.setOutsideTouchable(true);
                 mPopupWindow.showAtLocation(popupView, Gravity.CENTER,0,0);
 
-                Button submit = (Button)popupView.findViewById(R.id.addbtn);
-                submit.setOnClickListener(new View.OnClickListener() {
+                mReference = mDatabase.getReference();
+                addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int sc = numberPicker.getValue() + minValue;
+                        mReference.child("categories").child(id).child(test_add.getText().toString()).child("score").setValue(sc);
                         mPopupWindow.dismiss();
                     }
                 });

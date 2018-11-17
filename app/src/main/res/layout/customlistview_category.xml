@@ -7,11 +7,11 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="369dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,6 +21,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
@@ -36,14 +37,9 @@
 
             <ImageButton
                 android:id="@+id/imgbtn_minus"
-                android:layout_width="20dp"
-                android:layout_height="48dp"
-                android:background="@android:color/transparent"
-                android:paddingLeft="5dp"
-                android:paddingTop="18dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="18dp"
-                android:src="@drawable/imgbtn_minus" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/arrow_down_float" />
 
             <TextView
                 android:id="@+id/score"
@@ -54,18 +50,14 @@
 
             <ImageButton
                 android:id="@+id/imgbtn_plus"
-                android:layout_width="20dp"
-                android:layout_height="48dp"
-                android:layout_marginRight="30dp"
-                android:background="@android:color/transparent"
-                android:paddingLeft="5dp"
-                android:paddingTop="18dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="18dp"
-                android:src="@drawable/imgbtn_add" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/arrow_up_float" />
 
         </LinearLayout>
     </LinearLayout>
+
+
 
 
 
