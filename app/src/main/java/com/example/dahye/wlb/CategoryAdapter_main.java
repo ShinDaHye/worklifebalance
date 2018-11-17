@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryAdapter extends ArrayAdapter {
+public class CategoryAdapter_main extends ArrayAdapter {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 
@@ -38,16 +38,15 @@ public class CategoryAdapter extends ArrayAdapter {
         items=new ArrayList<CategoryItem>();
     }
 
-    public CategoryAdapter(Context context, int rsrcId, int txtId, List<CategoryItem> data) {
+    public CategoryAdapter_main(Context context, int rsrcId, int txtId, List<CategoryItem> data) {
         super(context, rsrcId, txtId, data);
-        this.items = data;
-        this.rsrc = rsrcId;
         this.context=context;
+        this.rsrc = rsrcId;
+        this.items = data;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        mDatabase = FirebaseDatabase.getInstance();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -56,44 +55,28 @@ public class CategoryAdapter extends ArrayAdapter {
         }else{
             id = "sdhdonna";
         }
-        mReference = mDatabase.getReference("categories").child(id);
+
+        mDatabase = FirebaseDatabase.getInstance();
+        mReference = mDatabase.getReference("split-score").child(id).child("day01");
 
         final Context context = parent.getContext();
 
         /* 'listview_custom' Layout을 inflate하여 convertView 참조 획득 */
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.customlistview_category, parent, false);
+            convertView = inflater.inflate(R.layout.category_main, parent, false);
         }
 
         /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
-        final TextView category = (TextView) convertView.findViewById(R.id.category) ;
-        final TextView score = (TextView) convertView.findViewById(R.id.score) ;
+        final TextView category = (TextView) convertView.findViewById(R.id.main_category) ;
+        final TextView score = (TextView) convertView.findViewById(R.id.main_score) ;
+        final TextView unit = (TextView) convertView.findViewById(R.id.unit) ;
 
         final CategoryItem item = items.get(position);
 
         category.setText(item.getCategory());
         score.setText(item.getScore());
-
-        /* 버튼에 대한 이벤트 리스너 */
-        ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.imgbtn_minus);
-        ImageButton imgbtn_plus = (ImageButton)convertView.findViewById(R.id.imgbtn_plus);
-
-        imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
-            public void onClick(View view){
-                int origin_num = Integer.parseInt(score.getText().toString());
-                score.setText(Integer.toString(origin_num - 1));
-                mReference.child(item.getCategory()).child("score").setValue(Integer.toString(origin_num - 1));
-            }
-        });
-
-        imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
-            public void onClick(View view){
-                int origin_num = Integer.parseInt(score.getText().toString());
-                score.setText(Integer.toString(origin_num + 1));
-                mReference.child(item.getCategory()).child("score").setValue(Integer.toString(origin_num + 1));
-            }
-        });
+        unit.setText(item.getUnit());
 
         return convertView;
     }

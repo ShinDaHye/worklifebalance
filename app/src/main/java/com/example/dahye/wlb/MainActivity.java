@@ -1,54 +1,45 @@
 package com.example.dahye.wlb;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.Api;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
+
+    private ListView listView;
+    private CategoryAdapter_main adapter;
+    List<CategoryItem> Array = new ArrayList<CategoryItem>();
+
     Button login, intent_add,intent_tuto, intent_graph;
     TextView providerId;
+    TextView scoreTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        scoreTextView=(TextView)findViewById(R.id.total_score);
+
+        listView = (ListView) findViewById(R.id.main_categories);
+
         login = (Button) findViewById(R.id.login);
         intent_add = (Button) findViewById(R.id.intent_add);
         intent_tuto = (Button) findViewById(R.id.intent_tuto);
@@ -68,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent_add.setOnClickListener(this);
         intent_tuto.setOnClickListener(this);
         intent_graph.setOnClickListener(this);
+
+        initDatabase(user.getEmail().substring(0,user.getEmail().indexOf("@")));
     }
 
     @Override
@@ -90,6 +83,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             finish();
         }
+    }
+
+    private void initDatabase(final String id) {
+        mDatabase = FirebaseDatabase.getInstance();
+
+        mReference = mDatabase.getReference("split-score").child(id).child("day01"); // 변경값을 확인할 child 이름
+
+        mReference.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int totalScore = 0;
+                adapter.clear();
+                for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    String msg1 = messageData.getKey().toString();
+                    String msg2 = messageData.child("score").getValue().toString();
+                    String msg3 = messageData.child("unit").getValue().toString();
+                    Array.add(new CategoryItem(msg1,msg2,msg3));
+                    adapter.add(new CategoryItem(msg1,msg2,msg3));
+                }
+
+                for(CategoryItem item : Array){
+                    totalScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
+                }
+
+                scoreTextView.setText("총점 : " + Integer.toString(totalScore));
+                mDatabase.getReference("total-score").child(id).child("day01").setValue(totalScore);
+            }
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        adapter = new CategoryAdapter_main(this, R.layout.activity_main,R.id.main_category, new ArrayList<CategoryItem>());
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }
