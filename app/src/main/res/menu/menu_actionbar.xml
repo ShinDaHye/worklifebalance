@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/redirect_addcategory"
+        android:title="카테고리 추가"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/redirect_graph"
+        android:title="그래프 보기"
+        app:showAsAction="never"/>
+</menu>

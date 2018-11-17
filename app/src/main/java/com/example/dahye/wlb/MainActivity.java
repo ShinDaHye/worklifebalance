@@ -3,6 +3,10 @@ package com.example.dahye.wlb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 
@@ -38,13 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
         scoreTextView=(TextView)findViewById(R.id.total_score);
 
         listView = (ListView) findViewById(R.id.main_categories);
 
-        intent_add = (Button) findViewById(R.id.intent_add);
-        intent_tuto = (Button) findViewById(R.id.intent_tuto);
-        intent_graph = (Button)findViewById(R.id.intent_graph);
+
         providerId = (TextView) findViewById(R.id.providerId);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Calendar c1 = Calendar.getInstance();
@@ -61,10 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent_add.setVisibility(View.GONE);
         }else{
         }
-
-        intent_add.setOnClickListener(this);
-        intent_tuto.setOnClickListener(this);
-        intent_graph.setOnClickListener(this);
 
         if(id != null){
             initDatabase(id,strToday);
@@ -116,20 +117,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
     }
 
+
     @Override
-    public void onClick(View view) {
-        if(view.getId()==R.id.intent_add){
-            Intent intent = new Intent(this,addcategory.class);
-            startActivity(intent);
-        }else if(view.getId()==R.id.intent_tuto){
-            Intent intent = new Intent(this,addcategory.class);
-            startActivity(intent);
-        }else if(view.getId()==R.id.intent_graph){
-            Intent intent = new Intent(this,graph.class);
-            startActivity(intent);
-        }else{
-            finish();
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_actionbar,menu);
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent =null;
+        switch (item.getItemId()){
+            case R.id.redirect_addcategory:
+                intent = new Intent(this,addcategory.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_graph:
+                intent = new Intent(this,graph.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
