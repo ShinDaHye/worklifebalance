@@ -30,6 +30,7 @@ public class addcategory extends Activity{
     private Button categoryadd;
     private PopupWindow mPopupWindow;
     private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
 
     private ListView listView;
     private CategoryAdapter adapter;
