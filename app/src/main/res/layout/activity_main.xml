@@ -60,6 +60,25 @@
             android:layout_height="wrap_content"
             android:text="그래프보기" />
 
+        <FrameLayout
+            android:id="@+id/total_score_container"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <TextView
+                android:id="@+id/total_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0" />
+
+        </FrameLayout>
+
+        <ListView
+            android:id="@+id/main_categories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
