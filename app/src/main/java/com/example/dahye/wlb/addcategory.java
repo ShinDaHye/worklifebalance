@@ -31,7 +31,6 @@ public class addcategory extends Activity{
     private PopupWindow mPopupWindow;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
-    private ChildEventListener mChild;
 
     private ListView listView;
     private CategoryAdapter adapter;
@@ -138,6 +137,5 @@ public class addcategory extends Activity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mReference.removeEventListener(mChild);
     }
 }
