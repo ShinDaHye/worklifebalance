@@ -20,6 +20,7 @@
         <activity android:name=".addcategory"/>
         <activity android:name=".graph"/>
         <activity android:name=".login"/>
+        <activity android:name=".resultpage"/>
 
 
     </application>

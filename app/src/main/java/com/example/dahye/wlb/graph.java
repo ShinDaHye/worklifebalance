@@ -1,10 +1,13 @@
 package com.example.dahye.wlb;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,22 +27,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class graph extends Activity {
+public class graph extends Activity implements View.OnClickListener{
     private LineChart lineChart;
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 //    List<Entry> array = new ArrayList<>();
-
+    Button intent_result;
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph);
 
         lineChart = (LineChart) findViewById(R.id.linechart);
-
+        intent_result = (Button) findViewById(R.id.intent_result) ;
+        intent_result.setOnClickListener(this);
 //        array =  initDatabase("sdhdonna");
         mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("score").child("sdhdonna");
+        mReference = mDatabase.getReference("total-score").child("sdhdonna");
         mReference.limitToLast(7).addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Entry> array = new ArrayList<>();
@@ -104,4 +108,11 @@ public class graph extends Activity {
         entries.add(new Entry(7,2));
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.intent_result){
+            Intent intent = new Intent(this, resultpage.class);
+            startActivity(intent);
+        }
+    }
 }
