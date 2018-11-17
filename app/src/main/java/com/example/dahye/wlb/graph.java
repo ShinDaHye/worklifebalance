@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class graph extends Activity implements View.OnClickListener{
@@ -54,7 +58,11 @@ public class graph extends Activity implements View.OnClickListener{
             startActivity(intent);
         }
     }
-    private void line_graph_Database(final String id, int day_count) {
+    private void line_graph_Database(final String id, final int day_count) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar c1 = Calendar.getInstance();
+
+        final int intToday = Integer.parseInt(sdf.format(c1.getTime()));
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("total-score").child(id);
 
@@ -63,7 +71,7 @@ public class graph extends Activity implements View.OnClickListener{
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
                     int score = Integer.parseInt(messageData.getValue().toString());
                     int day = Integer.parseInt(messageData.getKey().toString());
-                    xvals.add(new Entry(day, score));
+                    xvals.add(new Entry(day-intToday, score));
                 }
                 lineChart = (LineChart) findViewById(R.id.linechart);
 
@@ -76,12 +84,21 @@ public class graph extends Activity implements View.OnClickListener{
                 lineDataSet.setDrawHorizontalHighlightIndicator(false);
                 lineDataSet.setDrawHighlightIndicators(false);
                 lineDataSet.setDrawValues(false);
-                lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+//                lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
                 lineDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                 LineData lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
 
+                final String[] days = new String[]{"6일전","5일전","4일전","3일전","2일전","1일전","오늘"};
+                IAxisValueFormatter formatter = new IAxisValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, AxisBase axis) {
+                        return days[(int)value+7];
+                    }
+                };
                 XAxis xAxis = lineChart.getXAxis();
+                xAxis.setGranularity(1f);
+                xAxis.setValueFormatter(formatter);
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setTextColor(Color.BLACK);
                 xAxis.setDrawAxisLine(true);
