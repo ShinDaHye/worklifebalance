@@ -13,7 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CategoryAdapter_main extends ArrayAdapter {
@@ -47,6 +49,7 @@ public class CategoryAdapter_main extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final String today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -57,7 +60,7 @@ public class CategoryAdapter_main extends ArrayAdapter {
         }
 
         mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("split-score").child(id).child("day01");
+        mReference = mDatabase.getReference("split-score").child(id).child(today);
 
         final Context context = parent.getContext();
 
@@ -77,6 +80,27 @@ public class CategoryAdapter_main extends ArrayAdapter {
         category.setText(item.getCategory());
         score.setText(item.getScore());
         unit.setText(item.getUnit());
+
+        /* 버튼에 대한 이벤트 리스너 */
+        ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.main_imgbtn_minus);
+        ImageButton imgbtn_plus = (ImageButton)convertView.findViewById(R.id.main_imgbtn_plus);
+
+
+        imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
+            public void onClick(View view){
+                int origin_num = Integer.parseInt(unit.getText().toString());
+                unit.setText(Integer.toString(origin_num - 1));
+                mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num - 1));
+            }
+        });
+
+        imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
+            public void onClick(View view){
+                int origin_num = Integer.parseInt(unit.getText().toString());
+                unit.setText(Integer.toString(origin_num + 1));
+                mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num + 1));
+            }
+        });
 
         return convertView;
     }
