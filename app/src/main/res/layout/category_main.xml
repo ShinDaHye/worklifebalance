@@ -49,13 +49,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/main_imgbtn_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@android:drawable/arrow_up_float" />
 
                 <TextView
                     android:id="@+id/unit"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:gravity="center"
                     android:text="TextView" />
+
+                <ImageButton
+                    android:id="@+id/main_imgbtn_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@android:drawable/arrow_down_float" />
             </LinearLayout>
 
         </LinearLayout>

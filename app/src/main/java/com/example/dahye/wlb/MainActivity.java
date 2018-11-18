@@ -21,9 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +35,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private ListView listView;
     private CategoryAdapter_main adapter;
-    List<CategoryItem> Array = new ArrayList<CategoryItem>();
 
     Button submit;
     TextView providerId;
@@ -83,6 +79,7 @@ public class MainActivity extends AppCompatActivity  {
 
         mReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
+                List<CategoryItem> Array = new ArrayList<CategoryItem>();
                 int totalScore = 0;
                 adapter.clear();
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
