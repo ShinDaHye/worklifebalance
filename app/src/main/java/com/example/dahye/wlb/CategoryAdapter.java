@@ -13,7 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CategoryAdapter extends ArrayAdapter {
@@ -56,7 +58,7 @@ public class CategoryAdapter extends ArrayAdapter {
         }else{
             id = "sdhdonna";
         }
-        mReference = mDatabase.getReference("categories").child(id);
+        mReference = mDatabase.getReference();
 
         final Context context = parent.getContext();
 
@@ -78,20 +80,30 @@ public class CategoryAdapter extends ArrayAdapter {
         /* 버튼에 대한 이벤트 리스너 */
         ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.imgbtn_minus);
         ImageButton imgbtn_plus = (ImageButton)convertView.findViewById(R.id.imgbtn_plus);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar c1 = Calendar.getInstance();
+        final String strToday = sdf.format(c1.getTime());
 
         imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
+
                 int origin_num = Integer.parseInt(score.getText().toString());
-                score.setText(Integer.toString(origin_num - 1));
-                mReference.child(item.getCategory()).child("score").setValue(Integer.toString(origin_num - 1));
+                String minus = Integer.toString(origin_num -1);
+
+                score.setText(minus);
+                mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(minus);
+                mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(minus);
             }
         });
 
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
                 int origin_num = Integer.parseInt(score.getText().toString());
-                score.setText(Integer.toString(origin_num + 1));
-                mReference.child(item.getCategory()).child("score").setValue(Integer.toString(origin_num + 1));
+                String plus = Integer.toString(origin_num +1);
+                score.setText(plus);
+                mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(plus);
+                mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(plus);
+
             }
         });
 
