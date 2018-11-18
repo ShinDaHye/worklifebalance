@@ -3,6 +3,7 @@ package com.example.dahye.wlb;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class addcategory extends Activity{
@@ -41,6 +44,11 @@ public class addcategory extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addcategory);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar c1 = Calendar.getInstance();
+        final String strToday = sdf.format(c1.getTime());
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -102,8 +110,13 @@ public class addcategory extends Activity{
                     @Override
                     public void onClick(View view) {
                         int sc = numberPicker.getValue() + minValue;
-                        mReference.child("categories").child(id).child(test_add.getText().toString()).child("score").setValue(sc);
-                        mReference.child("categories").child(id).child(test_add.getText().toString()).child("score").setValue(sc);
+                        String categoryName = test_add.getText().toString();
+                        mReference.child("categories").child(id).child(categoryName).child("score").setValue(sc);
+                        Splititem splititem = new Splititem();
+                        splititem.setScore(sc);
+                        splititem.setUnit("0");
+                        mReference.child("split-score").child(id).child(strToday).child(categoryName).setValue(splititem);
+
                         mPopupWindow.dismiss();
                     }
                 });
