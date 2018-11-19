@@ -142,6 +142,10 @@ public class MainActivity extends AppCompatActivity  {
                 intent = new Intent(this,addcategory.class);
                 startActivity(intent);
                 return true;
+            case R.id.redirect_alarm:
+                intent = new Intent(this,SetAlarm.class);
+                startActivity(intent);
+                return true;
             case R.id.redirect_diary:
                 intent = new Intent(this,diarylist.class);
                 startActivity(intent);
