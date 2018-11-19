@@ -1,11 +1,17 @@
 package com.example.dahye.wlb;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +28,7 @@ public class CategoryAdapter extends ArrayAdapter {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
 
+    private PopupWindow mPopupWindow;
     String id;
 
     private List<CategoryItem> items;
@@ -80,6 +87,8 @@ public class CategoryAdapter extends ArrayAdapter {
         /* 버튼에 대한 이벤트 리스너 */
         ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.imgbtn_minus);
         ImageButton imgbtn_plus = (ImageButton)convertView.findViewById(R.id.imgbtn_plus);
+        ImageButton confirm = (ImageButton)convertView.findViewById(R.id.imgbtn_delete);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Calendar c1 = Calendar.getInstance();
         final String strToday = sdf.format(c1.getTime());
@@ -96,6 +105,7 @@ public class CategoryAdapter extends ArrayAdapter {
             }
         });
 
+
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
                 int origin_num = Integer.parseInt(score.getText().toString());
@@ -104,6 +114,16 @@ public class CategoryAdapter extends ArrayAdapter {
                 mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(plus);
                 mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(plus);
 
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                Calendar c1 = Calendar.getInstance();
+                String strToday = sdf.format(c1.getTime());
+                mReference.child("categories").child(id).child(item.getCategory()).child("score").removeValue();
+                mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).removeValue();
             }
         });
 

@@ -24,6 +24,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +50,10 @@ public class graph extends Activity implements View.OnClickListener{
         intent_result = (Button) findViewById(R.id.intent_result) ;
         intent_result.setOnClickListener(this);
 
-        line_graph_Database("sdhdonna",7);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
+        line_graph_Database(id,7);
     }
 
     @Override
@@ -78,7 +83,7 @@ public class graph extends Activity implements View.OnClickListener{
                 LineDataSet lineDataSet = new LineDataSet(xvals, "오늘의 워라밸");
                 lineDataSet.setLineWidth(2);
                 lineDataSet.setCircleRadius(6);
-                lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));;
+                lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
                 lineDataSet.setDrawCircleHole(true);
                 lineDataSet.setDrawCircles(true);
                 lineDataSet.setDrawHorizontalHighlightIndicator(false);
@@ -93,7 +98,7 @@ public class graph extends Activity implements View.OnClickListener{
                 IAxisValueFormatter formatter = new IAxisValueFormatter() {
                     @Override
                     public String getFormattedValue(float value, AxisBase axis) {
-                        return days[(int)value+7];
+                        return days[(int)value+6];
                     }
                 };
                 XAxis xAxis = lineChart.getXAxis();

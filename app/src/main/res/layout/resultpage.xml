@@ -30,9 +30,26 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></com.github.mikephil.charting.charts.PieChart>
+            android:layout_height="209dp"></com.github.mikephil.charting.charts.PieChart>
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일과 요약" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/submit_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장" />
 
 
     </LinearLayout>
