@@ -104,6 +104,8 @@ public class resultpage extends Activity implements View.OnClickListener {
                 String note = diary.getText().toString();
                 mReference = FirebaseDatabase.getInstance().getReference("diary");
                 mReference.child(id).child(strToday).setValue(note);
+                Intent intent = new Intent(getApplicationContext(),graph.class);
+                startActivity(intent);
             }
         });
     }

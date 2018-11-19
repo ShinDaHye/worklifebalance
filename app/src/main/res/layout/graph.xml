@@ -34,10 +34,5 @@
 
         </com.github.mikephil.charting.charts.LineChart>
 
-        <Button
-            android:id="@+id/intent_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="result이동" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
