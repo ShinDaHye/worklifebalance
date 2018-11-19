@@ -89,16 +89,20 @@ public class CategoryAdapter_main extends ArrayAdapter {
         imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
                 int origin_num = Integer.parseInt(unit.getText().toString());
-                unit.setText(Integer.toString(origin_num - 1));
-                mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num - 1));
+                if(origin_num>0) {
+                    unit.setText(Integer.toString(origin_num - 1));
+                    mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num - 1));
+                }
             }
         });
 
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
                 int origin_num = Integer.parseInt(unit.getText().toString());
-                unit.setText(Integer.toString(origin_num + 1));
-                mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num + 1));
+                if(origin_num<24) {
+                    unit.setText(Integer.toString(origin_num + 1));
+                    mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num + 1));
+                }
             }
         });
 

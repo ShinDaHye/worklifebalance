@@ -102,7 +102,9 @@ public class MainActivity extends AppCompatActivity  {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(),resultpage.class);
                         mDatabase.getReference("total-score").child(id).child(day).setValue(finalTotalScore);
+                        startActivity(intent);
                     }
                 });
             }
@@ -132,12 +134,12 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
         switch (item.getItemId()){
-            case R.id.redirect_addcategory:
-                intent = new Intent(this,addcategory.class);
+            case R.id.redirect_main:
+                intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.redirect_graph:
-                intent = new Intent(this,graph.class);
+            case R.id.redirect_addcategory:
+                intent = new Intent(this,addcategory.class);
                 startActivity(intent);
                 return true;
             case R.id.redirect_diary:
