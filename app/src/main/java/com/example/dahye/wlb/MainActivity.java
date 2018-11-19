@@ -2,7 +2,6 @@ package com.example.dahye.wlb;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,9 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity  {
     private FirebaseDatabase mDatabase;
@@ -35,6 +32,8 @@ public class MainActivity extends AppCompatActivity  {
 
     private ListView listView;
     private CategoryAdapter_main adapter;
+
+    private DefaultDataSet defaultDataSet;
 
     Button submit;
     TextView providerId;
@@ -62,7 +61,8 @@ public class MainActivity extends AppCompatActivity  {
             providerId.setText("");
         }
 
-        existenceCheck();
+        defaultDataSet = new DefaultDataSet();
+        defaultDataSet.existenceCheck();
 
         if(id != null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -143,53 +143,5 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    // 오늘 날짜의 데이터가 split-score에 존재하는지 확인.
-    public void existenceCheck(){
-        DatabaseReference datacheckRef = mDatabase.getReference("split-score").child(id);
 
-        datacheckRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            String today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.child(today).exists()){
-                    setDefaultUnit();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    // 오늘 날짜의 데이터가 split-score에 존재하지 않는 경우 default로 생성
-    public void setDefaultUnit(){
-        String categories;
-        DatabaseReference categoryRef = mDatabase.getReference("categories").child(id);
-        categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DatabaseReference storageLocRef = mDatabase.getReference("split-score").child(id);
-                String today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-
-                Map<String,Object> defaultUnits = new HashMap<>();
-                Map<String,Object> defaultUnit = new HashMap<>();
-
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Map<String, Object> submap = new HashMap<>();
-                    submap.put("score", data.child("score").getValue());
-                    submap.put("unit", 0);
-                    defaultUnit.put(data.getKey().toString(), submap);
-                    defaultUnits.put(today,defaultUnit);
-                }
-                storageLocRef.updateChildren(defaultUnits);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 }
