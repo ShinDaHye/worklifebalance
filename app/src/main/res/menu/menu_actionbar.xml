@@ -7,6 +7,7 @@
         android:title="메인으로"
         app:showAsAction="never"/>
 
+
     <item android:id="@+id/redirect_addcategory"
         android:title="카테고리 변경"
         app:showAsAction="never"/>

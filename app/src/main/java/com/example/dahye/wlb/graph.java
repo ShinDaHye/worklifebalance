@@ -43,13 +43,9 @@ public class graph extends Activity implements View.OnClickListener{
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
     List<Entry> xvals = new ArrayList<>();
-    Button intent_result;
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph);
-        intent_result = (Button) findViewById(R.id.intent_result) ;
-        intent_result.setOnClickListener(this);
-
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
@@ -58,10 +54,7 @@ public class graph extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.intent_result){
-            Intent intent = new Intent(this, resultpage.class);
-            startActivity(intent);
-        }
+
     }
     private void line_graph_Database(final String id, final int day_count) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
