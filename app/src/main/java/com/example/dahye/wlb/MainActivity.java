@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity  {
         listView = (ListView) findViewById(R.id.main_categories);
         providerId = (TextView) findViewById(R.id.providerId);
 
+        listView.setVerticalScrollBarEnabled(false);
+
         mDatabase = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -136,6 +138,10 @@ public class MainActivity extends AppCompatActivity  {
                 return true;
             case R.id.redirect_graph:
                 intent = new Intent(this,graph.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_diary:
+                intent = new Intent(this,diarylist.class);
                 startActivity(intent);
                 return true;
             default:

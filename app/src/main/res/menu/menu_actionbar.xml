@@ -10,4 +10,8 @@
     <item android:id="@+id/redirect_graph"
         android:title="그래프 보기"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/redirect_diary"
+        android:title="지난 기록 보기"
+        app:showAsAction="never"/>
 </menu>

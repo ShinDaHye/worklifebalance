@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -38,33 +40,72 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class resultpage extends Activity {
+public class resultpage extends Activity implements View.OnClickListener {
     PieChart pieChart;
 
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
     List<PieEntry> yvalues= new ArrayList<>();
 
-    Button submit_image;
+    Button submit_image, intent_diary;
+    EditText diary;
+    TextView diary_content;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultpage);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar c1 = Calendar.getInstance();
-        String strToday = sdf.format(c1.getTime());
+        Intent intent = getIntent();
+        String date = intent.getStringExtra("date");
+        final String strToday;
 
-        //제출버튼 클릭 이벤트
+        diary = (EditText)findViewById(R.id.diary);
+        diary_content = (TextView)findViewById(R.id.diary_content);
+        intent_diary = (Button)findViewById(R.id.intent_diary);
         submit_image = (Button)findViewById(R.id.submit_image);
-        submit_image.setOnClickListener(new View.OnClickListener() {
+
+        intent_diary.setOnClickListener(this);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
+
+        if(date != null){
+            strToday = date;
+            submit_image.setVisibility(View.GONE);
+            diary.setVisibility(View.GONE);
+        }else{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            Calendar c1 = Calendar.getInstance();
+            strToday = sdf.format(c1.getTime());
+            intent_diary.setVisibility(View.GONE);
+            diary_content.setVisibility(View.GONE);
+
+        }
+        //그래프 만들기
+        make_graph_Database(id,strToday);
+
+
+        mReference = mDatabase.getReference().child("diary").child(id).child(strToday);
+        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String msg = dataSnapshot.getValue().toString();
+                diary_content.setText(msg);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
-        make_graph_Database(id,strToday);
+        //제출버튼 클릭 이벤트
+        submit_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String note = diary.getText().toString();
+                mReference = FirebaseDatabase.getInstance().getReference("diary");
+                mReference.child(id).child(strToday).setValue(note);
+            }
+        });
     }
     private void make_graph_Database(final String id, String day) {
         mDatabase = FirebaseDatabase.getInstance();
@@ -105,4 +146,13 @@ public class resultpage extends Activity {
         super.onDestroy();
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==R.id.intent_diary){
+            Intent intent = new Intent(this, diarylist.class);
+            startActivity(intent);
+        }else{
+            finish();
+        }
+    }
 }
