@@ -62,6 +62,20 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             strToday = date;
             submit_image.setVisibility(View.GONE);
             diary.setVisibility(View.GONE);
+
+            mReference = mDatabase.getReference().child("diary").child(id).child(strToday);
+            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String msg = dataSnapshot.getValue().toString();
+                    diary_content.setText(msg);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }else{
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             Calendar c1 = Calendar.getInstance();
@@ -69,24 +83,11 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             intent_diary.setVisibility(View.GONE);
             diary_content.setVisibility(View.GONE);
 
+
         }
         //그래프 만들기
         make_graph_Database(id,strToday);
 
-
-        mReference = mDatabase.getReference().child("diary").child(id).child(strToday);
-        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String msg = dataSnapshot.getValue().toString();
-                diary_content.setText(msg);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         //제출버튼 클릭 이벤트
         submit_image.setOnClickListener(new View.OnClickListener() {
