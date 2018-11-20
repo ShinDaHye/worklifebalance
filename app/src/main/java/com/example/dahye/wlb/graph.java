@@ -64,12 +64,18 @@ public class graph extends Activity implements View.OnClickListener{
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("total-score").child(id);
 
+        final String[] days = new String[]{"6일전","5일전","4일전","3일전","2일전","1일전","오늘"};
+
         mReference.limitToLast(day_count).addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
+                int i = 0;
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
                     int score = Integer.parseInt(messageData.getValue().toString());
                     int day = Integer.parseInt(messageData.getKey().toString());
-                    xvals.add(new Entry(day-intToday, score));
+//                    xvals.add(new Entry(day-intToday, score));
+                    xvals.add(new Entry(i, score));
+                    days[i] = messageData.getKey().toString().substring(4,6)+"/"+messageData.getKey().toString().substring(6);
+                    i++;
                 }
                 lineChart = (LineChart) findViewById(R.id.linechart);
 
@@ -87,11 +93,10 @@ public class graph extends Activity implements View.OnClickListener{
                 LineData lineData = new LineData(lineDataSet);
                 lineChart.setData(lineData);
 
-                final String[] days = new String[]{"6일전","5일전","4일전","3일전","2일전","1일전","오늘"};
                 IAxisValueFormatter formatter = new IAxisValueFormatter() {
                     @Override
                     public String getFormattedValue(float value, AxisBase axis) {
-                        return days[(int)value+6];
+                        return days[(int)value];
                     }
                 };
                 XAxis xAxis = lineChart.getXAxis();
