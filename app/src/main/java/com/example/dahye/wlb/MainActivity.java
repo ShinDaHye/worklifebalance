@@ -2,10 +2,7 @@ package com.example.dahye.wlb;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,6 +34,8 @@ public class MainActivity extends AppCompatActivity  {
     private CategoryAdapter_main adapter;
 
     private DefaultDataSet defaultDataSet;
+
+    private long time2 = 0;
 
     Button submit;
     TextView providerId;
@@ -135,10 +134,10 @@ public class MainActivity extends AppCompatActivity  {
         Intent intent =null;
         if(item.getItemId()==R.id.logout){
             FirebaseAuth.getInstance().signOut();
-            intent = new Intent(this,login.class);
+            intent = new Intent(getApplicationContext(), login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             this.finish();
-            return true;
         }
 
         switch (item.getItemId()){
@@ -168,5 +167,12 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-
+    public void onBackPressed(){
+        if(System.currentTimeMillis()-time2>=2000){
+            time2 = System.currentTimeMillis();
+            Toast.makeText(this,"\'뒤로\' 버튼을 한번 더 누르면 종료합니다!",Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time2<2000){
+            finishAffinity();
+        }
+    }
 }
