@@ -8,10 +8,10 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -37,29 +37,37 @@
 
             <ImageButton
                 android:id="@+id/imgbtn_minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:src="@android:drawable/arrow_down_float" />
 
             <TextView
                 android:id="@+id/score"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="TextView" />
 
             <ImageButton
                 android:id="@+id/imgbtn_plus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:src="@android:drawable/arrow_up_float" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#f2f2f2f2" />
 
             <ImageButton
                 android:id="@+id/imgbtn_delete"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@android:drawable/ic_menu_delete" />
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_delete"/>
 
         </LinearLayout>
     </LinearLayout>
