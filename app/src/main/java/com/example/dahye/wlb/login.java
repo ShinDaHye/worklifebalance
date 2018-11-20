@@ -114,7 +114,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                 startActivity(intent);
                 finish();
             }
-        },1000);
+        },500);
     }
 
     public void onBackPressed(){

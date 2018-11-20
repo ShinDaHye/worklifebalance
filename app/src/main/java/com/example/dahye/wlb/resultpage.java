@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class resultpage extends AppCompatActivity implements View.OnClickListener {
     PieChart pieChart;
 
@@ -63,7 +65,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             strToday = date;
             submit_image.setVisibility(View.GONE);
             diary.setVisibility(View.GONE);
-            Log.e("check",id);
+
             mReference = mDatabase.getInstance().getReference("diary").child(id).child(strToday);
             mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -116,7 +118,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
                     String msg3 = messageData.child("unit").getValue().toString();
                     int yval = Integer.parseInt(msg2)*Integer.parseInt(msg3);
                     if(yval != 0){
-                        yvalues.add(new PieEntry(yval,msg1));
+                        yvalues.add(new PieEntry(abs(yval),msg1));
                     }
                 }
                 pieChart = (PieChart) findViewById(R.id.piechart);

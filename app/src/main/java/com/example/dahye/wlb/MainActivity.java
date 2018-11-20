@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_actionbar,menu);
+        MenuItem item1 = (MenuItem) menu.findItem(R.id.redirect_main);
+        item1.setVisible(false);
         return true;
     }
 
