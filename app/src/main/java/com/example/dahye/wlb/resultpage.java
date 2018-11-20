@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -62,8 +63,8 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             strToday = date;
             submit_image.setVisibility(View.GONE);
             diary.setVisibility(View.GONE);
-
-            mReference = mDatabase.getReference().child("diary").child(id).child(strToday);
+            Log.e("check",id);
+            mReference = mDatabase.getInstance().getReference("diary").child(id).child(strToday);
             mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,6 +77,8 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
 
                 }
             });
+            //그래프 만들기
+            make_graph_Database(id,strToday);
         }else{
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             Calendar c1 = Calendar.getInstance();
@@ -83,10 +86,10 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             intent_diary.setVisibility(View.GONE);
             diary_content.setVisibility(View.GONE);
 
+            //그래프 만들기
+            make_graph_Database(id,strToday);
 
         }
-        //그래프 만들기
-        make_graph_Database(id,strToday);
 
 
         //제출버튼 클릭 이벤트
@@ -110,8 +113,11 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
                     String msg1 = messageData.getKey().toString();
                     String msg2 = messageData.child("score").getValue().toString();
-                    int yval = Integer.parseInt(msg2);
-                    yvalues.add(new PieEntry(yval,msg1));
+                    String msg3 = messageData.child("unit").getValue().toString();
+                    int yval = Integer.parseInt(msg2)*Integer.parseInt(msg3);
+                    if(yval != 0){
+                        yvalues.add(new PieEntry(yval,msg1));
+                    }
                 }
                 pieChart = (PieChart) findViewById(R.id.piechart);
 

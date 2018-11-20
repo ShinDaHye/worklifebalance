@@ -34,7 +34,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="TextView"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/main_score"
@@ -42,7 +43,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textStyle="italic" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

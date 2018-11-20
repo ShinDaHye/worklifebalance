@@ -2,6 +2,7 @@ package com.example.dahye.wlb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -30,7 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class addcategory extends AppCompatActivity{
-    private Button categoryadd;
+    private FloatingActionButton fab;
     private PopupWindow mPopupWindow;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
@@ -51,21 +52,16 @@ public class addcategory extends AppCompatActivity{
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            id =user.getEmail();
-            id = id.substring(0,id.indexOf("@"));
-        }else{
-            id = "sdhdonna";
-            Toast.makeText(addcategory.this,"로그인해주세요",Toast.LENGTH_LONG).show();
-        }
+        id =user.getEmail();
+        id = id.substring(0,id.indexOf("@"));
+
         listView = (ListView) findViewById(R.id.listviewmsg);
 
         initDatabase(id);
 
         //버튼 이벤트 생성(팝업)
-        categoryadd = findViewById(R.id.categoryadd);
-
-        categoryadd.setOnClickListener(new View.OnClickListener() {
+        fab = findViewById(R.id.fab1);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View popupView = getLayoutInflater().inflate(R.layout.popupaddcategory,null);

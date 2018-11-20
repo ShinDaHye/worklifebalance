@@ -52,12 +52,10 @@ public class CategoryAdapter_main extends ArrayAdapter {
         final String today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            id =user.getEmail();
-            id = id.substring(0,id.indexOf("@"));
-        }else{
-            id = "sdhdonna";
-        }
+
+        id =user.getEmail();
+        id = id.substring(0,id.indexOf("@"));
+
 
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("split-score").child(id).child(today);
