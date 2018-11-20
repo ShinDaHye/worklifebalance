@@ -59,12 +59,10 @@ public class CategoryAdapter extends ArrayAdapter {
         mDatabase = FirebaseDatabase.getInstance();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            id =user.getEmail();
-            id = id.substring(0,id.indexOf("@"));
-        }else{
-            id = "sdhdonna";
-        }
+
+        id =user.getEmail();
+        id = id.substring(0,id.indexOf("@"));
+
         mReference = mDatabase.getReference();
 
         final Context context = parent.getContext();

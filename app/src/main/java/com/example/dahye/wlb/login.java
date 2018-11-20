@@ -90,10 +90,8 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                             FirebaseUser user = mAuth.getCurrentUser();
                             String providerId = user.getEmail();
                             testview.setText(providerId);
-                            Toast.makeText(login.this, "구글로그인 인증", Toast.LENGTH_SHORT).show();
                             startLoading();
                         }else{ // login fail
-                            Toast.makeText(getApplicationContext(),"Authentication failed.", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
