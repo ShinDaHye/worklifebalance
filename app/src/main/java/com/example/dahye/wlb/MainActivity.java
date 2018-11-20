@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity  {
     private long time2 = 0;
 
     Button submit;
-    TextView providerId;
     TextView scoreTextView;
     String id;
     @Override
@@ -48,18 +47,12 @@ public class MainActivity extends AppCompatActivity  {
 
         scoreTextView=(TextView)findViewById(R.id.total_score);
         listView = (ListView) findViewById(R.id.main_categories);
-        providerId = (TextView) findViewById(R.id.providerId);
 
         listView.setVerticalScrollBarEnabled(false);
 
         mDatabase = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            providerId.setText(user.getEmail());
-            id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
-        }else{
-            providerId.setText("");
-        }
+        id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
 
         defaultDataSet = new DefaultDataSet();
         defaultDataSet.ckFirstVisit();
