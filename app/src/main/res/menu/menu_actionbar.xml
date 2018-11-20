@@ -9,9 +9,10 @@
         android:icon="@drawable/log_out"
         app:showAsAction="always" />
 
-    <item android:id="@+id/redirect_main"
+    <item
+        android:id="@+id/redirect_main"
         android:title="메인으로"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item android:id="@+id/redirect_addcategory"
         android:title="카테고리 변경"
