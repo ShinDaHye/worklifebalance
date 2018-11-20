@@ -31,17 +31,5 @@
             android:layout_height="wrap_content"
             android:text="내 아이디" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log out" />
-
-        <Button
-            android:id="@+id/back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BACK" />
-
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -31,7 +31,6 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
     private GoogleApiClient mGoogleApiClient;
     SignInButton Google_Login;
     TextView testview;
-    Button Logout, Back;
 
     private static final int RC_SIGN_IN = 1000;
     @Override
@@ -41,22 +40,13 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
         setContentView(R.layout.login);
 
         testview = (TextView) findViewById(R.id.textView);
-        Logout = (Button) findViewById(R.id.button);
-        Back = (Button) findViewById(R.id.back);
-        Back.setOnClickListener(this);
         Google_Login = findViewById(R.id.Google_Login);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null){ // 로그인 되어있으면
-            Logout.setVisibility(View.VISIBLE);
-            Google_Login.setVisibility(View.GONE);
             testview.setText(user.getEmail().toString());
             startLoading();
-        }else{ // 안되어 있으면
-            Logout.setVisibility(View.GONE);
-            Google_Login.setVisibility(View.VISIBLE);
         }
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -73,19 +63,6 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
             public void onClick(View view) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent,RC_SIGN_IN);
-            }
-        });
-
-        Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                FirebaseUser user = mAuth.getCurrentUser();
-                testview.setText((CharSequence) user);
-                Toast.makeText(login.this,"Logout", Toast.LENGTH_LONG).show();
-                Google_Login.setVisibility(View.VISIBLE);
-                Logout.setVisibility(View.GONE);
-//                testview.setText("");
             }
         });
 
@@ -114,8 +91,6 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
                             FirebaseUser user = mAuth.getCurrentUser();
                             String providerId = user.getEmail();
                             testview.setText(providerId);
-                            Google_Login.setVisibility(View.GONE);
-                            Logout.setVisibility(View.VISIBLE);
                             Toast.makeText(login.this, "구글로그인 인증", Toast.LENGTH_SHORT).show();
                             startLoading();
                         }else{ // login fail
@@ -126,12 +101,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Go
     }
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.back){
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-        }else{
-            finish();
-        }
+
     }
 
     @Override

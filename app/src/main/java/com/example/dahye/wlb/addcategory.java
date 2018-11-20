@@ -2,10 +2,15 @@ package com.example.dahye.wlb;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class addcategory extends Activity{
+public class addcategory extends AppCompatActivity{
     private Button categoryadd;
     private PopupWindow mPopupWindow;
     private FirebaseDatabase mDatabase;
@@ -152,4 +157,41 @@ public class addcategory extends Activity{
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_actionbar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent =null;
+        switch (item.getItemId()){
+            case R.id.redirect_main:
+                intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_addcategory:
+                intent = new Intent(this,addcategory.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_alarm:
+                intent = new Intent(this,SetAlarm.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_diary:
+                intent = new Intent(this,diarylist.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_test:
+                intent = new Intent(this,Testview.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

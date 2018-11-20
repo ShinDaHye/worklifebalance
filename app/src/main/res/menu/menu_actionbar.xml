@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Settings, should always be in the overflow -->
+    <item
+        android:id="@+id/logout"
+        android:title="logout"
+        android:icon="@drawable/log_out"
+        app:showAsAction="always" />
+
     <item android:id="@+id/redirect_main"
         android:title="메인으로"
         app:showAsAction="never"/>
-
 
     <item android:id="@+id/redirect_addcategory"
         android:title="카테고리 변경"
@@ -18,5 +23,9 @@
 
     <item android:id="@+id/redirect_diary"
         android:title="지난 기록 보기"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/redirect_test"
+        android:title="테스트"
         app:showAsAction="never"/>
 </menu>

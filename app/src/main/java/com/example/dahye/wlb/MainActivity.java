@@ -2,8 +2,10 @@ package com.example.dahye.wlb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,9 +46,6 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
 
         scoreTextView=(TextView)findViewById(R.id.total_score);
         listView = (ListView) findViewById(R.id.main_categories);
@@ -133,11 +133,20 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
+        if(item.getItemId()==R.id.logout){
+            FirebaseAuth.getInstance().signOut();
+            intent = new Intent(this,login.class);
+            startActivity(intent);
+            this.finish();
+            return true;
+        }
+
         switch (item.getItemId()){
             case R.id.redirect_main:
-                intent = new Intent(this,MainActivity.class);
+               /* intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
-                return true;
+                return true;*/
+                return super.onOptionsItemSelected(item);
             case R.id.redirect_addcategory:
                 intent = new Intent(this,addcategory.class);
                 startActivity(intent);
@@ -148,6 +157,10 @@ public class MainActivity extends AppCompatActivity  {
                 return true;
             case R.id.redirect_diary:
                 intent = new Intent(this,diarylist.class);
+                startActivity(intent);
+                return true;
+            case R.id.redirect_test:
+                intent = new Intent(this,Testview.class);
                 startActivity(intent);
                 return true;
             default:

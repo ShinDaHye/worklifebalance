@@ -26,6 +26,7 @@
         <activity android:name=".diarylist"/>
         <activity android:name=".SetAlarm"/>
         <receiver android:name=".BroadcastAlarm"/>
+        <activity android:name=".Testview"/>
     </application>
 
 </manifest>
