@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity  {
 
         mDatabase = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         if(user != null){
             providerId.setText(user.getEmail());
             id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity  {
         }
 
         defaultDataSet = new DefaultDataSet();
+        defaultDataSet.ckFirstVisit();
         defaultDataSet.existenceCheck();
 
         if(id != null){

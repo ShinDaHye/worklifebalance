@@ -21,12 +21,40 @@ public class DefaultDataSet {
     private FirebaseUser user;
 
     String id;
+    String today;
 
     public DefaultDataSet(){
         mDatabase=FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
+        today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+    }
+
+    public void ckFirstVisit(){
+        DatabaseReference datacheckRef = mDatabase.getReference("user");
+        datacheckRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.child(id).exists()) {
+                    firstVisit();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void firstVisit(){
+        mDatabase.getReference("user").child(id).setValue(today);
+        mDatabase.getReference("categories").child(id).child("-work").child("score").setValue(-10);
+        mDatabase.getReference("categories").child(id).child("shopping").child("score").setValue(1);
+        mDatabase.getReference("diary").child(id).child(today).setValue("");
+        mDatabase.getReference("total-score").child(id).child(today).setValue(0);
+
     }
 
     // 오늘 날짜의 데이터가 split-score에 존재하는지 확인.
@@ -57,7 +85,6 @@ public class DefaultDataSet {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DatabaseReference storageLocRef = mDatabase.getReference("split-score").child(id);
-                String today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
 
                 Map<String,Object> defaultUnits = new HashMap<>();
                 Map<String,Object> defaultUnit = new HashMap<>();
