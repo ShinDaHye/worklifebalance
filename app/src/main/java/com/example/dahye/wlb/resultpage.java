@@ -1,28 +1,22 @@
 package com.example.dahye.wlb;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,15 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class resultpage extends Activity implements View.OnClickListener {
+public class resultpage extends AppCompatActivity implements View.OnClickListener {
     PieChart pieChart;
 
     private FirebaseDatabase mDatabase;
@@ -155,6 +146,49 @@ public class resultpage extends Activity implements View.OnClickListener {
             startActivity(intent);
         }else{
             finish();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_actionbar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent =null;
+
+        if(item.getItemId()==R.id.logout){
+            FirebaseAuth.getInstance().signOut();
+            intent = new Intent(getApplicationContext(), login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            this.finish();
+        }
+
+        switch (item.getItemId()){
+            case R.id.redirect_main:
+                this.finish();
+            case R.id.redirect_addcategory:
+                intent = new Intent(this,addcategory.class);
+                startActivity(intent);
+                this.finish();
+            case R.id.redirect_alarm:
+                intent = new Intent(this,SetAlarm.class);
+                startActivity(intent);
+                this.finish();
+            case R.id.redirect_diary:
+                intent = new Intent(this,diarylist.class);
+                startActivity(intent);
+                this.finish();
+            case R.id.redirect_test:
+                intent = new Intent(this,Testview.class);
+                startActivity(intent);
+                this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

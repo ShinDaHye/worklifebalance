@@ -1,13 +1,9 @@
 package com.example.dahye.wlb;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -168,27 +163,34 @@ public class addcategory extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
+
+        if(item.getItemId()==R.id.logout){
+            FirebaseAuth.getInstance().signOut();
+            intent = new Intent(getApplicationContext(), login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            this.finish();
+        }
+
         switch (item.getItemId()){
             case R.id.redirect_main:
-                intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                return true;
+                this.finish();
             case R.id.redirect_addcategory:
-                intent = new Intent(this,addcategory.class);
-                startActivity(intent);
-                return true;
+/*                intent = new Intent(this,addcategory.class);
+                startActivity(intent);*/
+                return super.onOptionsItemSelected(item);
             case R.id.redirect_alarm:
                 intent = new Intent(this,SetAlarm.class);
                 startActivity(intent);
-                return true;
+                this.finish();
             case R.id.redirect_diary:
                 intent = new Intent(this,diarylist.class);
                 startActivity(intent);
-                return true;
+                this.finish();
             case R.id.redirect_test:
                 intent = new Intent(this,Testview.class);
                 startActivity(intent);
-                return true;
+                this.finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
