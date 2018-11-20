@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity  {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             this.finish();
+            return true;
         }
 
         switch (item.getItemId()){
@@ -151,10 +152,6 @@ public class MainActivity extends AppCompatActivity  {
                 return true;
             case R.id.redirect_diary:
                 intent = new Intent(this,diarylist.class);
-                startActivity(intent);
-                return true;
-            case R.id.redirect_test:
-                intent = new Intent(this,Testview.class);
                 startActivity(intent);
                 return true;
             default:

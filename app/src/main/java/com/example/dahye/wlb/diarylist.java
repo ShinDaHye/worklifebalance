@@ -86,28 +86,28 @@ public class diarylist extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             this.finish();
+            return true;
         }
 
         switch (item.getItemId()){
             case R.id.redirect_main:
                 this.finish();
+                return true;
             case R.id.redirect_addcategory:
                 intent = new Intent(this,addcategory.class);
                 startActivity(intent);
                 this.finish();
+                return true;
             case R.id.redirect_alarm:
                 intent = new Intent(this,SetAlarm.class);
                 startActivity(intent);
                 this.finish();
+                return true;
             case R.id.redirect_diary:
 /*                intent = new Intent(this,diarylist.class);
                 startActivity(intent);
                 this.finish();*/
                 return super.onOptionsItemSelected(item);
-            case R.id.redirect_test:
-                intent = new Intent(this,Testview.class);
-                startActivity(intent);
-                this.finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
