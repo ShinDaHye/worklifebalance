@@ -3,6 +3,7 @@ package com.example.dahye.wlb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class diarylist extends Activity {
+public class diarylist extends AppCompatActivity {
     private ListView diarylist;
     private ArrayAdapter<String> adapter;
 
