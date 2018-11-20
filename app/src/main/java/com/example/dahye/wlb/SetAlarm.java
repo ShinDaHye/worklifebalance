@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Set;
@@ -34,6 +39,15 @@ public class SetAlarm extends Activity {
         mtimePicker = (TimePicker)findViewById(R.id.timePicker);
         malarmTime = (TextView)findViewById(R.id.Alarmtime);
 
+        SharedPreferences preferences = getSharedPreferences("pref",MODE_PRIVATE);
+        malarmTime.setText(preferences.getString("AlarmTime",""));
+        if(malarmTime.getText().toString() != ""){ // 알람이 이미 설정되어 있으면
+            set_alarm.setVisibility(View.INVISIBLE);
+            cancel_alarm.setVisibility(View.VISIBLE);
+        }else{
+            set_alarm.setVisibility(View.VISIBLE);
+            cancel_alarm.setVisibility(View.INVISIBLE);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             hour = mtimePicker.getHour();
             minute = mtimePicker.getMinute();
@@ -103,10 +117,15 @@ public class SetAlarm extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
+        if(item.getItemId()==R.id.logout){
+            FirebaseAuth.getInstance().signOut();
+            intent = new Intent(getApplicationContext(), login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            this.finish();
+        }
         switch (item.getItemId()){
             case R.id.redirect_main:
-                intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
                 this.finish();
             case R.id.redirect_addcategory:
                 intent = new Intent(this,addcategory.class);
@@ -128,6 +147,15 @@ public class SetAlarm extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    protected void onStop(){
+        super.onStop();
+        TextView malarmTime = (TextView)findViewById(R.id.Alarmtime);
+        String stralarmTime = malarmTime.getText().toString();
+        SharedPreferences preferences = getSharedPreferences("pref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("AlarmTime", stralarmTime);
+        editor.commit();
     }
 }
 
