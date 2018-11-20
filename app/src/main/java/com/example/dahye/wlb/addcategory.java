@@ -111,13 +111,19 @@ public class addcategory extends AppCompatActivity{
                     public void onClick(View view) {
                         int sc = numberPicker.getValue() + minValue;
                         String categoryName = test_add.getText().toString();
-                        mReference.child("categories").child(id).child(categoryName).child("score").setValue(sc);
-                        Splititem splititem = new Splititem();
-                        splititem.setScore(sc);
-                        splititem.setUnit("0");
-                        mReference.child("split-score").child(id).child(strToday).child(categoryName).setValue(splititem);
+                        if(categoryName.length() != 0){
+                            mReference.child("categories").child(id).child(categoryName).child("score").setValue(sc);
+                            Splititem splititem = new Splititem();
+                            splititem.setScore(sc);
+                            splititem.setUnit("0");
+                            mReference.child("split-score").child(id).child(strToday).child(categoryName).setValue(splititem);
 
-                        mPopupWindow.dismiss();
+                            mPopupWindow.dismiss();
+                        }else{
+                            Toast.makeText(addcategory.this,"카테고리 이름을 입력해주세요!",Toast.LENGTH_SHORT).show();
+                            test_add.requestFocus();
+                            return;
+                        }
                     }
                 });
             }
