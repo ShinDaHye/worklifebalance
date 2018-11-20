@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
@@ -45,6 +45,18 @@
                 android:layout_weight="1"
                 android:text="알람 취소" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="설정된 알람 시각" />
+
+        <TextView
+            android:id="@+id/Alarmtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="알람을 설정해주세요." />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
