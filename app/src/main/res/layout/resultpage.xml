@@ -56,15 +56,10 @@
 
         <Button
             android:id="@+id/submit_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="저장" />
-
-        <Button
-            android:id="@+id/intent_diary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="다이어리로 이동" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="right"
+            android:background="@drawable/save_btn" />
 
         <TextView
             android:id="@+id/diary_content"

@@ -78,9 +78,11 @@
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="제출" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="right"
+                android:background="@drawable/submit_btn"
+                android:text="" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
