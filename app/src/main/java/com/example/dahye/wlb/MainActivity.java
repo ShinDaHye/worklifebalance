@@ -3,6 +3,7 @@ package com.example.dahye.wlb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity  {
     private DatabaseReference mReference;
     private FirebaseUser user;
 
+    private Toolbar myToolbar;
     private ListView listView;
     private CategoryAdapter_main adapter;
 
@@ -44,6 +46,13 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
+        getSupportActionBar().setTitle("");
 
         scoreTextView=(TextView)findViewById(R.id.total_score);
         listView = (ListView) findViewById(R.id.main_categories);
@@ -127,7 +136,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
-        if(item.getItemId()==R.id.logout){
+        if(item.getItemId()==android.R.id.home){
             FirebaseAuth.getInstance().signOut();
             intent = new Intent(getApplicationContext(), login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

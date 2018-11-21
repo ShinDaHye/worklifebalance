@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,12 +42,22 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference mReference;
     List<PieEntry> yvalues= new ArrayList<>();
 
+    private Toolbar myToolbar;
     Button submit_image, intent_diary;
     EditText diary;
     TextView diary_content;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultpage);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
+        getSupportActionBar().setTitle("");
+
+
         Intent intent = getIntent();
         String date = intent.getStringExtra("date");
         final String strToday;
@@ -169,7 +180,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
 
-        if(item.getItemId()==R.id.logout){
+        if(item.getItemId()==android.R.id.home){
             FirebaseAuth.getInstance().signOut();
             intent = new Intent(getApplicationContext(), login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

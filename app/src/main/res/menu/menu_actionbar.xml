@@ -4,12 +4,6 @@
 
     <!-- Settings, should always be in the overflow -->
     <item
-        android:id="@+id/logout"
-        android:title="logout"
-        android:icon="@drawable/log_out"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/redirect_main"
         android:title="메인으로"
         app:showAsAction="never" />

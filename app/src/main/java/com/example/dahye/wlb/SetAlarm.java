@@ -1,6 +1,5 @@
 package com.example.dahye.wlb;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,12 +20,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
-import java.util.Set;
 
-public class SetAlarm extends Activity {
+public class SetAlarm extends AppCompatActivity {
+    private Toolbar myToolbar;
     TimePicker mtimePicker;
     int hour, minute;
     Button set_alarm, cancel_alarm;
@@ -33,6 +32,14 @@ public class SetAlarm extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setalarm);
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
+        getSupportActionBar().setTitle("");
+
+
         set_alarm = (Button) findViewById(R.id.setAlarm);
         cancel_alarm = (Button) findViewById(R.id.cancelAlarm);
         cancel_alarm.setVisibility(View.INVISIBLE);
@@ -117,7 +124,7 @@ public class SetAlarm extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
-        if(item.getItemId()==R.id.logout){
+        if(item.getItemId()==android.R.id.home){
             FirebaseAuth.getInstance().signOut();
             intent = new Intent(getApplicationContext(), login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
