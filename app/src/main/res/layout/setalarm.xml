@@ -26,25 +26,28 @@
             android:timePickerMode="clock">
         </TimePicker>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/setAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="알람 설정" />
+                android:id="@+id/cancelAlarm"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="right"
+                android:background="@drawable/cancel_btn"
+                android:text="" />
 
             <Button
-                android:id="@+id/cancelAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="알람 취소" />
-        </LinearLayout>
+                android:id="@+id/setAlarm"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="right"
+                android:background="@drawable/set_btn"
+                android:text="" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textView10"

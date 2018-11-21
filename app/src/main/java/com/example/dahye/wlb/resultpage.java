@@ -41,7 +41,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference mReference;
     List<PieEntry> yvalues= new ArrayList<>();
 
-    Button submit_image, intent_diary;
+    Button submit_image;
     EditText diary;
     TextView diary_content;
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +53,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
 
         diary = (EditText)findViewById(R.id.diary);
         diary_content = (TextView)findViewById(R.id.diary_content);
-        intent_diary = (Button)findViewById(R.id.intent_diary);
         submit_image = (Button)findViewById(R.id.submit_image);
-
-        intent_diary.setOnClickListener(this);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
@@ -85,7 +82,6 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             Calendar c1 = Calendar.getInstance();
             strToday = sdf.format(c1.getTime());
-            intent_diary.setVisibility(View.GONE);
             diary_content.setVisibility(View.GONE);
 
             //그래프 만들기
@@ -150,12 +146,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.intent_diary){
-            Intent intent = new Intent(this, diarylist.class);
-            startActivity(intent);
-        }else{
-            finish();
-        }
+
     }
 
     @Override
