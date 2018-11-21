@@ -73,17 +73,17 @@ public class SetAlarm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new AlarmHatt(getApplicationContext()).Alarm(hour, minute);
-                Toast.makeText(SetAlarm.this, "알람이 설정되었습니다!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SetAlarm.this, "알람이 설정되었어요!",Toast.LENGTH_SHORT).show();
                 set_alarm.setVisibility(View.INVISIBLE);
                 cancel_alarm.setVisibility(View.VISIBLE);
-                malarmTime.setText(hour + "시" + minute + "분에 알람이 설정되었습니다.");
+                malarmTime.setText(hour + "시" + minute + "분에 만나요~!");
             }
         });
         cancel_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new AlarmHatt(getApplicationContext()).cancel();
-                Toast.makeText(SetAlarm.this, "알람이 삭제되었습니다!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SetAlarm.this, "알람이 삭제되었어요!",Toast.LENGTH_SHORT).show();
 
                 set_alarm.setVisibility(View.VISIBLE);
                 cancel_alarm.setVisibility(View.INVISIBLE);

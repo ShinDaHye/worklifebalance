@@ -3,71 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="70dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TimePicker
-            android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:timePickerMode="clock">
-        </TimePicker>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="70dp">
 
-            <Button
-                android:id="@+id/cancelAlarm"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="right"
-                android:background="@drawable/cancel_btn"
-                android:text="" />
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="clock"></TimePicker>
 
-            <Button
-                android:id="@+id/setAlarm"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="right"
-                android:background="@drawable/set_btn"
-                android:text="" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        </FrameLayout>
+                <Button
+                    android:id="@+id/cancelAlarm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/cancel_btn"
+                    android:text="" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="설정된 알람 시각" />
+                <Button
+                    android:id="@+id/setAlarm"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/set_btn"
+                    android:text="" />
 
-        <TextView
-            android:id="@+id/Alarmtime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="알람을 설정해주세요." />
+            </FrameLayout>
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="[설정된 알람 시각]"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/Alarmtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="몇시에 만날까요?"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
