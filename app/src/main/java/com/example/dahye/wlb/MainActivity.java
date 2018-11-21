@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity  {
     private long time2 = 0;
 
     Button submit;
-    TextView scoreTextView;
+    TextView workScoreTextView,lifeScoreTextView;
     String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity  {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
         getSupportActionBar().setTitle("");
 
-        scoreTextView=(TextView)findViewById(R.id.total_score);
+        workScoreTextView=(TextView)findViewById(R.id.work_score);
+        lifeScoreTextView=(TextView)findViewById(R.id.life_score);
+
         listView = (ListView) findViewById(R.id.main_categories);
 
         listView.setVerticalScrollBarEnabled(false);
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity  {
         mReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<CategoryItem> Array = new ArrayList<CategoryItem>();
+                int workScore = 0;
+                int lifeScore = 0;
                 int totalScore = 0;
                 adapter.clear();
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
@@ -94,10 +98,15 @@ public class MainActivity extends AppCompatActivity  {
                 }
 
                 for(CategoryItem item : Array){
+                    if(Integer.parseInt(item.getScore())>0){
+                        lifeScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
+                        lifeScoreTextView.setText(lifeScore +"");
+                    }else if(Integer.parseInt(item.getScore())<0){
+                        workScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
+                        workScoreTextView.setText(workScore+"");
+                    }
                     totalScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
                 }
-
-                scoreTextView.setText("총점 : " + Integer.toString(totalScore));
 
                 final int finalTotalScore = totalScore;
                 submit.setOnClickListener(new View.OnClickListener() {

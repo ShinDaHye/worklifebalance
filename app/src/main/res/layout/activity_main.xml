@@ -28,21 +28,45 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <FrameLayout
-                android:id="@+id/total_score_container"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/radius_content">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/border_white_container">
 
-                <TextView
-                    android:id="@+id/total_score"
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/work_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="0" />
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/balance" />
 
-            </FrameLayout>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/life_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0" />
+                </FrameLayout>
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/main_categories"
