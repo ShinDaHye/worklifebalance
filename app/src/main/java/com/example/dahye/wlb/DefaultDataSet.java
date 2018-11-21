@@ -53,8 +53,9 @@ public class DefaultDataSet {
         mDatabase.getReference("categories").child(id).child("-work").child("score").setValue(-10);
         mDatabase.getReference("categories").child(id).child("shopping").child("score").setValue(1);
         mDatabase.getReference("diary").child(id).child(today).setValue("");
-        mDatabase.getReference("total-score").child(id).child(today).setValue(0);
-
+        for(int i = 0; i<7; i++){
+            mDatabase.getReference("total-score").child(id).child((Integer.parseInt(today)-i) +"").setValue(0);
+        }
     }
 
     // 오늘 날짜의 데이터가 split-score에 존재하는지 확인.
