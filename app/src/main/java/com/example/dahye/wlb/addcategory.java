@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class addcategory extends AppCompatActivity{
-    private FloatingActionButton fab;
+    private MovableFloatingActionButton fab;
     private PopupWindow mPopupWindow;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;

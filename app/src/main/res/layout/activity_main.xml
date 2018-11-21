@@ -82,7 +82,7 @@
             android:id="@+id/submit"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="top|center"
+            android:layout_gravity="bottom|center"
             android:background="@drawable/submit_btn"
             android:text="" />
     </FrameLayout>
