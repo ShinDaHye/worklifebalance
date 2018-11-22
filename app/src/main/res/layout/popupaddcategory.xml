@@ -39,12 +39,14 @@
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:gravity="center"
                     android:text="이름" />
 
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="80dp"
+                    android:gravity="center"
                     android:text="점수" />
 
             </LinearLayout>
@@ -61,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:ems="10"
-                    android:hint="볼링"
+                    android:hint="예) 볼링"
                     android:inputType="text" />
 
                 <NumberPicker
@@ -75,12 +77,20 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/addbtn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="추가"
-            tools:layout_editor_absoluteY="567dp" />
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addbtn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="right"
+                android:background="@drawable/add_btn"
+                tools:layout_editor_absoluteY="567dp" />
+        </LinearLayout>
 
     </LinearLayout>
 

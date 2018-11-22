@@ -47,6 +47,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="[나의 카테고리]"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp" />
+
         <ListView
             android:id="@+id/listviewmsg"
             android:layout_width="match_parent"

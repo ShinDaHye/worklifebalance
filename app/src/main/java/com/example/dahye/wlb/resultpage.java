@@ -43,9 +43,8 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
     List<PieEntry> yvalues= new ArrayList<>();
 
     private Toolbar myToolbar;
-    Button submit_image, intent_diary;
+    Button submit_image;
     EditText diary;
-    TextView diary_content;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultpage);
@@ -63,42 +62,17 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
         final String strToday;
 
         diary = (EditText)findViewById(R.id.diary);
-        diary_content = (TextView)findViewById(R.id.diary_content);
         submit_image = (Button)findViewById(R.id.submit_image);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
 
-        if(date != null){
-            strToday = date;
-            submit_image.setVisibility(View.GONE);
-            diary.setVisibility(View.GONE);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar c1 = Calendar.getInstance();
+        strToday = sdf.format(c1.getTime());
 
-            mReference = mDatabase.getInstance().getReference("diary").child(id).child(strToday);
-            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String msg = dataSnapshot.getValue().toString();
-                    diary_content.setText(msg);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-            //그래프 만들기
-            make_graph_Database(id,strToday);
-        }else{
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            Calendar c1 = Calendar.getInstance();
-            strToday = sdf.format(c1.getTime());
-            diary_content.setVisibility(View.GONE);
-
-            //그래프 만들기
-            make_graph_Database(id,strToday);
-
-        }
+        //그래프 만들기
+        make_graph_Database(id,strToday);
 
 
         //제출버튼 클릭 이벤트

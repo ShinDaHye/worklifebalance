@@ -65,6 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="0"
+                        android:textColor="@android:color/holo_red_dark"
                         android:textSize="20dp" />
                 </FrameLayout>
 
@@ -88,6 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="0"
+                        android:textColor="@android:color/holo_blue_dark"
                         android:textSize="20dp" />
                 </FrameLayout>
             </LinearLayout>
