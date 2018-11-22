@@ -7,12 +7,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -44,6 +47,8 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
 
     private Toolbar myToolbar;
     Button submit_image, intent_diary;
+
+    ImageButton menuBtn;
     EditText diary;
     TextView diary_content;
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +57,50 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
         getSupportActionBar().setTitle("");
+
+        menuBtn = (ImageButton)findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu p = new PopupMenu(getApplicationContext(), view,Gravity.LEFT);
+                getMenuInflater().inflate(R.menu.nav_menu, p.getMenu());
+
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.redirect_main:
+                                finish();
+                                break;
+                            case R.id.redirect_addcategory:
+                                intent = new Intent(getApplicationContext(),addcategory.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.redirect_alarm:
+                                intent = new Intent(getApplicationContext(),SetAlarm.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.redirect_diary:
+                                intent = new Intent(getApplicationContext(),diarylist.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                MenuItem hideItem = (MenuItem) p.getMenu().getItem(0);
+                hideItem.setVisible(false);
+                p.show(); // 메뉴를 띄우기
+            }
+        });
 
 
         Intent intent = getIntent();
@@ -110,6 +155,7 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
                 mReference.child(id).child(strToday).setValue(note);
                 Intent intent = new Intent(getApplicationContext(),graph.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -180,27 +226,6 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
             return true;
         }
 
-        switch (item.getItemId()){
-            case R.id.redirect_main:
-                this.finish();
-                return true;
-            case R.id.redirect_addcategory:
-                intent = new Intent(this,addcategory.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            case R.id.redirect_alarm:
-                intent = new Intent(this,SetAlarm.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            case R.id.redirect_diary:
-                intent = new Intent(this,diarylist.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 }
