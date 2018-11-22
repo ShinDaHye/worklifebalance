@@ -12,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ public class addcategory extends AppCompatActivity{
     private DatabaseReference mReference;
 
     private Toolbar myToolbar;
+    private ImageButton menuBtn;
     private ListView listView;
     private CategoryAdapter adapter;
     List<CategoryItem> Array = new ArrayList<CategoryItem>();
@@ -50,10 +53,45 @@ public class addcategory extends AppCompatActivity{
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
         getSupportActionBar().setTitle("");
+
+        menuBtn = (ImageButton)findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu p = new PopupMenu(getApplicationContext(), view,Gravity.LEFT);
+                getMenuInflater().inflate(R.menu.nav_menu, p.getMenu());
+
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.redirect_main:
+                                finish();
+                                break;
+                            case R.id.redirect_alarm:
+                                intent = new Intent(getApplicationContext(),SetAlarm.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.redirect_diary:
+                                intent = new Intent(getApplicationContext(),diarylist.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                MenuItem hideItem = (MenuItem) p.getMenu().getItem(1);
+                hideItem.setVisible(false);
+                p.show(); // 메뉴를 띄우기
+            }
+        });
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -169,8 +207,6 @@ public class addcategory extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_actionbar,menu);
-        MenuItem item1 = (MenuItem) menu.findItem(R.id.redirect_addcategory);
-        item1.setVisible(false);
         return true;
     }
 
@@ -178,7 +214,7 @@ public class addcategory extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
 
-        if(item.getItemId()==android.R.id.home){
+        if(item.getItemId()==R.id.logout){
             FirebaseAuth.getInstance().signOut();
             intent = new Intent(getApplicationContext(), login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -186,28 +222,7 @@ public class addcategory extends AppCompatActivity{
             this.finish();
             return true;
         }
-
-        switch (item.getItemId()){
-            case R.id.redirect_main:
-                this.finish();
-                return true;
-            case R.id.redirect_addcategory:
-/*                intent = new Intent(this,addcategory.class);
-                startActivity(intent);*/
-                return super.onOptionsItemSelected(item);
-            case R.id.redirect_alarm:
-                intent = new Intent(this,SetAlarm.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            case R.id.redirect_diary:
-                intent = new Intent(this,diarylist.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

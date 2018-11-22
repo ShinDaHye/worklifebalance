@@ -14,7 +14,26 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:contentInsetStart="0dp">
+
+        <ImageButton
+            android:id="@+id/menuBtn"
+            android:background="@android:color/transparent"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/menu"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="WORK  LIFE" />
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -35,8 +54,9 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="left"
                     android:layout_weight="1">
 
                     <TextView
@@ -44,19 +64,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="0" />
+                        android:text="0"
+                        android:textSize="20dp" />
                 </FrameLayout>
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/balance" />
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="right"
                     android:layout_weight="1">
 
                     <TextView
@@ -64,7 +87,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="0" />
+                        android:text="0"
+                        android:textSize="20dp" />
                 </FrameLayout>
             </LinearLayout>
 
@@ -86,4 +110,5 @@
             android:background="@drawable/submit_btn"
             android:text="" />
     </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity  {
     private long time2 = 0;
 
     Button submit;
+    ImageButton menuBtn;
     TextView workScoreTextView,lifeScoreTextView;
     String id;
     @Override
@@ -49,10 +53,44 @@ public class MainActivity extends AppCompatActivity  {
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.log_out);
         getSupportActionBar().setTitle("");
+
+        menuBtn = (ImageButton)findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu p = new PopupMenu(getApplicationContext(), view,Gravity.LEFT);
+                getMenuInflater().inflate(R.menu.nav_menu, p.getMenu());
+
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.redirect_addcategory:
+                                intent = new Intent(getApplicationContext(),addcategory.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.redirect_alarm:
+                                intent = new Intent(getApplicationContext(),SetAlarm.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.redirect_diary:
+                                intent = new Intent(getApplicationContext(),diarylist.class);
+                                startActivity(intent);
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                MenuItem hideItem = (MenuItem) p.getMenu().getItem(0);
+                hideItem.setVisible(false);
+                p.show(); // 메뉴를 띄우기
+            }
+        });
 
         workScoreTextView=(TextView)findViewById(R.id.work_score);
         lifeScoreTextView=(TextView)findViewById(R.id.life_score);
@@ -137,15 +175,13 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_actionbar,menu);
-        MenuItem item1 = (MenuItem) menu.findItem(R.id.redirect_main);
-        item1.setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
-        if(item.getItemId()==android.R.id.home){
+        if(item.getItemId()==R.id.logout){
             FirebaseAuth.getInstance().signOut();
             intent = new Intent(getApplicationContext(), login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -154,27 +190,7 @@ public class MainActivity extends AppCompatActivity  {
             return true;
         }
 
-        switch (item.getItemId()){
-            case R.id.redirect_main:
-               /* intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                return true;*/
-                return super.onOptionsItemSelected(item);
-            case R.id.redirect_addcategory:
-                intent = new Intent(this,addcategory.class);
-                startActivity(intent);
-                return true;
-            case R.id.redirect_alarm:
-                intent = new Intent(this,SetAlarm.class);
-                startActivity(intent);
-                return true;
-            case R.id.redirect_diary:
-                intent = new Intent(this,diarylist.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBackPressed(){

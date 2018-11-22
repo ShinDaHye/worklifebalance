@@ -11,7 +11,7 @@
     </style>
 
     <style name="AppTheme.OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@android:color/white</item>
+        <item name="android:tint">#353535</item>
     </style>
 
 </resources>
