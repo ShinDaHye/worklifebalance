@@ -52,7 +52,9 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="지난 7일간의 기록"
+            android:layout_marginTop="10dp"
+            android:text="[지난 7일간의 기록]"
+            android:textColor="@android:color/darker_gray"
             android:textSize="18sp" />
 
         <com.github.mikephil.charting.charts.LineChart
@@ -66,12 +68,19 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="지금까지 나는 평균" />
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="지금까지 나의 평균"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/score_mean"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="dd"
+            android:textColor="@color/colorPrimary"
+            android:textSize="40sp" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

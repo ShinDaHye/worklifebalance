@@ -141,7 +141,7 @@ public class graph extends AppCompatActivity implements View.OnClickListener{
                 float mean = sum / 7;
                 DecimalFormat df = new DecimalFormat("#.##");
                 TextView mscore_mean = (TextView)findViewById(R.id.score_mean);
-                mscore_mean.setText(df.format(mean)+"점!");
+                mscore_mean.setText(df.format(mean)+"점!!");
                 lineChart = (LineChart) findViewById(R.id.linechart);
 
                 LineDataSet lineDataSet = new LineDataSet(xvals, "7일간 기록");

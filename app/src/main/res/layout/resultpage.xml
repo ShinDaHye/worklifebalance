@@ -50,9 +50,11 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="결과보고서"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp"
+            android:text="[결과보고서]"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:textStyle="normal" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
@@ -63,7 +65,9 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="일과 요약" />
+            android:layout_marginTop="10dp"
+            android:text="[오늘을 한 줄로 표현하면?]"
+            android:textColor="@android:color/darker_gray" />
 
         <EditText
             android:id="@+id/diary"
@@ -78,13 +82,6 @@
             android:layout_height="80dp"
             android:layout_gravity="right"
             android:background="@drawable/save_btn" />
-
-        <TextView
-            android:id="@+id/diary_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="gg" />
-
 
 
     </LinearLayout>

@@ -66,8 +66,8 @@
                 android:id="@+id/imgbtn_delete"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_delete"/>
+                android:background="@android:color/holo_red_dark"
+                android:src="@android:drawable/ic_menu_delete" />
 
         </LinearLayout>
     </LinearLayout>

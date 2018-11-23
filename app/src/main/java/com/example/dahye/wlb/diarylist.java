@@ -38,8 +38,6 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class diarylist extends AppCompatActivity  {
-    private ListView diarylist;
-    private ArrayAdapter<String> adapter;
     private Spinner mSpinner;
     private List<String> list = new ArrayList<String>();
     private FirebaseDatabase mDatabase;

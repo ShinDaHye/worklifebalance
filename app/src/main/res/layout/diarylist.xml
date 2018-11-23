@@ -42,7 +42,9 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지난 나의 워라밸"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="[지난 나의 워라밸]"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -61,6 +63,7 @@
                 android:id="@+id/btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:background="@android:color/transparent"
                 app:srcCompat="@android:drawable/ic_menu_search" />
         </LinearLayout>
@@ -80,14 +83,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="결과보고서"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/piechart"
                 android:layout_width="match_parent"
@@ -97,13 +92,14 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="일과 요약" />
+                android:layout_marginTop="10dp"
+                android:text="[하루 요약]"
+                android:textColor="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/diary_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="gg" />
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
