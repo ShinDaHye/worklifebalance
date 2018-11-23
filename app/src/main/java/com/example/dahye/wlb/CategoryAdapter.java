@@ -3,7 +3,6 @@ package com.example.dahye.wlb;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class CategoryAdapter extends ArrayAdapter {
     private FirebaseDatabase mDatabase;
@@ -93,13 +90,14 @@ public class CategoryAdapter extends ArrayAdapter {
 
         imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-
                 int origin_num = Integer.parseInt(score.getText().toString());
-                String minus = Integer.toString(origin_num -1);
 
-                score.setText(minus);
-                mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(minus);
-                mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(minus);
+                if(origin_num>-10) {
+                    String minus = Integer.toString(origin_num - 1);
+                    score.setText(minus);
+                    mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(minus);
+                    mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(minus);
+                }
             }
         });
 
@@ -107,10 +105,12 @@ public class CategoryAdapter extends ArrayAdapter {
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
                 int origin_num = Integer.parseInt(score.getText().toString());
-                String plus = Integer.toString(origin_num +1);
-                score.setText(plus);
-                mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(plus);
-                mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(plus);
+                if(origin_num<10) {
+                    String plus = Integer.toString(origin_num + 1);
+                    score.setText(plus);
+                    mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(plus);
+                    mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(plus);
+                }
 
             }
         });
