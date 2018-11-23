@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -45,8 +47,8 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
     private Toolbar myToolbar;
 
     Button submit_image;
-
     ImageButton menuBtn;
+
     EditText diary;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,13 +94,9 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
                         return false;
                     }
                 });
-
-                MenuItem hideItem = (MenuItem) p.getMenu().getItem(0);
-                hideItem.setVisible(false);
                 p.show(); // 메뉴를 띄우기
             }
         });
-
 
         Intent intent = getIntent();
         String date = intent.getStringExtra("date");
@@ -177,7 +175,6 @@ public class resultpage extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

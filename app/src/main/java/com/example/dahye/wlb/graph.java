@@ -101,8 +101,6 @@ public class graph extends AppCompatActivity implements View.OnClickListener{
                     }
                 });
 
-                MenuItem hideItem = (MenuItem) p.getMenu().getItem(0);
-                hideItem.setVisible(false);
                 p.show(); // 메뉴를 띄우기
             }
         });
