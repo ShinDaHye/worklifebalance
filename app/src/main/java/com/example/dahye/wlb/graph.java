@@ -6,12 +6,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -46,12 +50,62 @@ import java.util.List;
 public class graph extends AppCompatActivity implements View.OnClickListener{
     private LineChart lineChart;
 
+    private Toolbar myToolbar;
+    private ImageButton menuBtn;
+
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
     List<Entry> xvals = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("");
+
+        menuBtn = (ImageButton)findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu p = new PopupMenu(getApplicationContext(), view,Gravity.LEFT);
+                getMenuInflater().inflate(R.menu.nav_menu, p.getMenu());
+
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.redirect_main:
+                                finish();
+                                break;
+                            case R.id.redirect_addcategory:
+                                intent = new Intent(getApplicationContext(),addcategory.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.redirect_alarm:
+                                intent = new Intent(getApplicationContext(),SetAlarm.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.redirect_diary:
+                                intent = new Intent(getApplicationContext(),diarylist.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                MenuItem hideItem = (MenuItem) p.getMenu().getItem(0);
+                hideItem.setVisible(false);
+                p.show(); // 메뉴를 띄우기
+            }
+        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
@@ -151,7 +205,7 @@ public class graph extends AppCompatActivity implements View.OnClickListener{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent =null;
-        if(item.getItemId()==android.R.id.home){
+        if(item.getItemId()==android.R.id.home) {
             FirebaseAuth.getInstance().signOut();
             intent = new Intent(getApplicationContext(), login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -159,28 +213,6 @@ public class graph extends AppCompatActivity implements View.OnClickListener{
             this.finish();
             return true;
         }
-        switch (item.getItemId()){
-            case R.id.redirect_main:
-                intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            case R.id.redirect_addcategory:
-                intent = new Intent(this,addcategory.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            case R.id.redirect_alarm:
-                intent = new Intent(this,SetAlarm.class);
-                startActivity(intent);
-                return true;
-            case R.id.redirect_diary:
-                intent = new Intent(this,diarylist.class);
-                startActivity(intent);
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 }
