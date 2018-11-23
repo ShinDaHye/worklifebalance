@@ -1,6 +1,9 @@
 package com.example.dahye.wlb;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class CategoryAdapter extends ArrayAdapter {
     private FirebaseDatabase mDatabase;
@@ -112,11 +117,33 @@ public class CategoryAdapter extends ArrayAdapter {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-                Calendar c1 = Calendar.getInstance();
-                String strToday = sdf.format(c1.getTime());
-                mReference.child("categories").child(id).child(item.getCategory()).child("score").removeValue();
-                mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).removeValue();
+                AlertDialog.Builder ad = new AlertDialog.Builder(getContext());
+
+                ad.setTitle("카테고리 삭제");       // 제목 설정
+                ad.setMessage("정말 삭제하시겠습니까?");   // 내용 설정
+
+                // 취소 버튼 설정
+                ad.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                    }
+                });
+                // 확인 버튼 설정
+                ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                        Calendar c1 = Calendar.getInstance();
+                        String strToday = sdf.format(c1.getTime());
+                        mReference.child("categories").child(id).child(item.getCategory()).child("score").removeValue();
+                        mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).removeValue();
+
+                        dialog.dismiss();     //닫기
+                    }
+                });
+
+                ad.show();
             }
         });
 
