@@ -76,8 +76,8 @@ public class CategoryAdapter_main extends ArrayAdapter {
         final CategoryItem item = items.get(position);
 
         category.setText(item.getCategory());
-        score.setText(item.getScore());
-        unit.setText(item.getUnit());
+        score.setText(item.getScore()+" 점");
+        unit.setText(item.getUnit()+" 시간");
 
         /* 버튼에 대한 이벤트 리스너 */
         ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.main_imgbtn_minus);
@@ -86,9 +86,8 @@ public class CategoryAdapter_main extends ArrayAdapter {
 
         imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-                int origin_num = Integer.parseInt(unit.getText().toString());
+                int origin_num = Integer.parseInt(unit.getText().toString().substring(0,unit.getText().toString().indexOf(" ")));
                 if(origin_num>0) {
-                    unit.setText(Integer.toString(origin_num - 1));
                     mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num - 1));
                 }
             }
@@ -96,9 +95,8 @@ public class CategoryAdapter_main extends ArrayAdapter {
 
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-                int origin_num = Integer.parseInt(unit.getText().toString());
+                int origin_num = Integer.parseInt(unit.getText().toString().substring(0,unit.getText().toString().indexOf(" ")));
                 if(origin_num<24) {
-                    unit.setText(Integer.toString(origin_num + 1));
                     mReference.child(item.getCategory()).child("unit").setValue(Integer.toString(origin_num + 1));
                 }
             }

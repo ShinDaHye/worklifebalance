@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="65dp"
         android:orientation="vertical">
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:text="[지난 나의 워라밸]"
+            android:text="[지난 나의 WORK LIFE BALANCE]"
             android:textSize="18sp" />
 
         <LinearLayout

@@ -39,7 +39,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="70dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,9 +68,9 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="지금까지 나의 평균"
+            android:layout_marginTop="20dp"
+            android:text="[지난 7일간의 평균]"
+            android:textColor="@android:color/darker_gray"
             android:textSize="18sp" />
 
         <TextView
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="dd"
+            android:text="ㅁㅁ"
             android:textColor="@color/colorPrimary"
             android:textSize="40sp" />
 

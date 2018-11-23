@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity  {
                         lifeScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
                         lifeScoreTextView.setText(lifeScore +"");
                     }else if(Integer.parseInt(item.getScore())<0){
-                        workScore -= Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
+                        workScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());
                         workScoreTextView.setText(workScore+"");
                     }
                     totalScore += Integer.parseInt(item.getScore())*Integer.parseInt(item.getUnit());

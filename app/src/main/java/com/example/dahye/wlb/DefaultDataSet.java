@@ -51,8 +51,13 @@ public class DefaultDataSet {
 
     public void firstVisit(){
         mDatabase.getReference("user").child(id).setValue(today);
-        mDatabase.getReference("categories").child(id).child("-work").child("score").setValue(-10);
-        mDatabase.getReference("categories").child(id).child("shopping").child("score").setValue(1);
+        mDatabase.getReference("categories").child(id).child("일").child("score").setValue(-1);
+        mDatabase.getReference("categories").child(id).child("야근").child("score").setValue(-2);
+        mDatabase.getReference("categories").child(id).child("산책").child("score").setValue(1);
+        mDatabase.getReference("categories").child(id).child("쇼핑").child("score").setValue(2);
+        mDatabase.getReference("categories").child(id).child("친구 만나기").child("score").setValue(2);
+        mDatabase.getReference("categories").child(id).child("책읽기").child("score").setValue(1);
+        mDatabase.getReference("categories").child(id).child("맛집 탐방").child("score").setValue(2);
         mDatabase.getReference("diary").child(id).child(today).setValue("");
         for(int i = 0; i<7; i++){
             mDatabase.getReference("total-score").child(id).child((Integer.parseInt(today)-i) +"").setValue(0);

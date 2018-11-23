@@ -77,7 +77,7 @@ public class CategoryAdapter extends ArrayAdapter {
         final CategoryItem item = items.get(position);
 
         category.setText(item.getCategory());
-        score.setText(item.getScore());
+        score.setText(item.getScore()+" 점");
 
         /* 버튼에 대한 이벤트 리스너 */
         ImageButton imgbtn_minus = (ImageButton)convertView.findViewById(R.id.imgbtn_minus);
@@ -90,11 +90,10 @@ public class CategoryAdapter extends ArrayAdapter {
 
         imgbtn_minus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-                int origin_num = Integer.parseInt(score.getText().toString());
+                int origin_num = Integer.parseInt(score.getText().toString().substring(0,score.getText().toString().indexOf(" ")));
 
                 if(origin_num>-10) {
                     String minus = Integer.toString(origin_num - 1);
-                    score.setText(minus);
                     mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(minus);
                     mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(minus);
                 }
@@ -104,10 +103,9 @@ public class CategoryAdapter extends ArrayAdapter {
 
         imgbtn_plus.setOnClickListener(new ImageButton.OnClickListener(){
             public void onClick(View view){
-                int origin_num = Integer.parseInt(score.getText().toString());
+                int origin_num = Integer.parseInt(score.getText().toString().substring(0,score.getText().toString().indexOf(" ")));
                 if(origin_num<10) {
                     String plus = Integer.toString(origin_num + 1);
-                    score.setText(plus);
                     mReference.child("categories").child(id).child(item.getCategory()).child("score").setValue(plus);
                     mReference.child("split-score").child(id).child(strToday).child(item.getCategory()).child("score").setValue(plus);
                 }
