@@ -23,7 +23,7 @@ public class BroadcastAlarm extends BroadcastReceiver {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             notificationManager.createNotificationChannel(mChannel);
         }
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0, new Intent(context, MainActivity.class),PendingIntent.FLAG_NO_CREATE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0, new Intent(context, MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CH_ID);
         builder.setSmallIcon(R.mipmap.ic_icon)
                 .setContentTitle("오늘은 어땠나요?")
